@@ -34,6 +34,7 @@ namespace Imaginarium
             WindowConnection windowConnection = new WindowConnection();
             windowConnection.name = tbUserName.Text;
             windowConnection.Show();
+            this.Hide();
         }
     }
 }

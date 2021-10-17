@@ -30,6 +30,8 @@ namespace wcf_game
             if (users.Count < 5)
             {
                 SendMsg(" К игре подключился " + user.Name + ". Для начала игры не хватает " + (4 - users.Count) + " игроков.", 0);
+                
+
             }
             else if (users.Count == 5)
             {
@@ -63,6 +65,7 @@ namespace wcf_game
                 {
                     answer += ": " + user.Name + " загадал ассоциацию: ";
                 }
+
                 answer += msg;
 
                 item.operationContext.GetCallbackChannel<IServerGameCallback>().MsgCallback(answer);

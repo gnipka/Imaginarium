@@ -40,6 +40,15 @@ namespace Imaginarium
             client = new ServiceGameClient(new System.ServiceModel.InstanceContext(this));
             mas = client.Connect(name);            
             pb.Value = mas[0];
+            if (mas[1] == 1)
+            {
+                lbMsg.Items.Add("Происходит подключение, в данный момент к серверу подключены: " + mas[1] + " игрок");
+                
+            }
+            else
+            {
+                lbMsg.Items.Add("Происходит подключение, в данный момент к серверу подключены: " + mas[1] + " игрока");
+            }
         }
     }
 }
