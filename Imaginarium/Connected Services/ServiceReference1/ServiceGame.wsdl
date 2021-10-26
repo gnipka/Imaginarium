@@ -51,6 +51,12 @@
   <wsdl:message name="IServiceGame_SendMsg_InputMessage">
     <wsdl:part name="parameters" element="tns:SendMsg" />
   </wsdl:message>
+  <wsdl:message name="IServiceGame_ReturnNameImage_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnNameImage" />
+  </wsdl:message>
+  <wsdl:message name="IServiceGame_ReturnNameImage_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnNameImageResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceGame_MsgCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:MsgCallback" />
   </wsdl:message>
@@ -65,6 +71,10 @@
     </wsdl:operation>
     <wsdl:operation name="SendMsg">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/SendMsg" message="tns:IServiceGame_SendMsg_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnNameImage">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/ReturnNameImage" message="tns:IServiceGame_ReturnNameImage_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceGame/ReturnNameImageResponse" message="tns:IServiceGame_ReturnNameImage_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="MsgCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceGame/MsgCallback" message="tns:IServiceGame_MsgCallback_OutputCallbackMessage" />
@@ -96,6 +106,15 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnNameImage">
+      <soap12:operation soapAction="http://tempuri.org/IServiceGame/ReturnNameImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="MsgCallback">
       <soap12:operation soapAction="http://tempuri.org/IServiceGame/MsgCallback" style="document" />

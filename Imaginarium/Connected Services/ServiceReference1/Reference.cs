@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Imaginarium.ServiceHost {
+namespace Imaginarium.ServiceReference1 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceHost.IServiceGame", CallbackContract=typeof(Imaginarium.ServiceHost.IServiceGameCallback))]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IServiceGame", CallbackContract=typeof(Imaginarium.ServiceReference1.IServiceGameCallback))]
     public interface IServiceGame {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/Connect", ReplyAction="http://tempuri.org/IServiceGame/ConnectResponse")]
@@ -32,6 +32,12 @@ namespace Imaginarium.ServiceHost {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServiceGame/SendMsg")]
         System.Threading.Tasks.Task SendMsgAsync(string msg, int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnNameImage", ReplyAction="http://tempuri.org/IServiceGame/ReturnNameImageResponse")]
+        int ReturnNameImage();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnNameImage", ReplyAction="http://tempuri.org/IServiceGame/ReturnNameImageResponse")]
+        System.Threading.Tasks.Task<int> ReturnNameImageAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -42,12 +48,12 @@ namespace Imaginarium.ServiceHost {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServiceGameChannel : Imaginarium.ServiceHost.IServiceGame, System.ServiceModel.IClientChannel {
+    public interface IServiceGameChannel : Imaginarium.ServiceReference1.IServiceGame, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServiceGameClient : System.ServiceModel.DuplexClientBase<Imaginarium.ServiceHost.IServiceGame>, Imaginarium.ServiceHost.IServiceGame {
+    public partial class ServiceGameClient : System.ServiceModel.DuplexClientBase<Imaginarium.ServiceReference1.IServiceGame>, Imaginarium.ServiceReference1.IServiceGame {
         
         public ServiceGameClient(System.ServiceModel.InstanceContext callbackInstance) : 
                 base(callbackInstance) {
@@ -91,6 +97,14 @@ namespace Imaginarium.ServiceHost {
         
         public System.Threading.Tasks.Task SendMsgAsync(string msg, int id) {
             return base.Channel.SendMsgAsync(msg, id);
+        }
+        
+        public int ReturnNameImage() {
+            return base.Channel.ReturnNameImage();
+        }
+        
+        public System.Threading.Tasks.Task<int> ReturnNameImageAsync() {
+            return base.Channel.ReturnNameImageAsync();
         }
     }
 }

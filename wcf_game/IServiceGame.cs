@@ -21,6 +21,8 @@ namespace wcf_game
         [OperationContract(IsOneWay = true)]
         void SendMsg(string msg, int id);
 
+        void ReturnMsg(string msg, int id);
+
     }
 
     public interface IServerGameCallback

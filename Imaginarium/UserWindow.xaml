@@ -13,32 +13,47 @@
         TextOptions.TextRenderingMode="Auto"
         Background="#B39DDB"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="1000" Width="1200" WindowStartupLocation="CenterScreen" WindowStyle="None">
+        Title="MainWindow" Height="700" Width="1000" WindowStartupLocation="CenterOwner" WindowStyle="ThreeDBorderWindow" Loaded="Window_Loaded">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="257*"/>
+            <RowDefinition Height="282*"/>
+            <RowDefinition Height="232*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="2" Background="#EDE7F6" >
+        <Grid Grid.Row="2" Background="#EDE7F6" Margin="0,1.333,0.333,-0.333" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="199*"/>
+                <ColumnDefinition Width="199*"/>
+                <ColumnDefinition Width="199*"/>
+                <ColumnDefinition Width="199*"/>
+                <ColumnDefinition Width="198*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Margin="2 2 2 2"/>
-            <Image Grid.Column="1" Margin="2 2 2 2"/>
-            <Image Grid.Column="2" Margin="2 2 2 2"/>
-            <Image Grid.Column="3" Margin="2 2 2 2"/>
-            <Image Grid.Column="4" Margin="2 2 2 2"/>
+            <Image x:Name="Img1" Grid.Column="0" Margin="2,2,198.333,2" Stretch="UniformToFill" Width="197" Height="Auto" Grid.ColumnSpan="2" >
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="Height" Value="197"/>
+                        <Setter Property="Width" Value="197" />
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Height" Value="300" />
+                                <Setter Property="Width" Value="400" />
+                                <Setter Property="Stretch" Value="Uniform"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image x:Name="Img2" Grid.Column="1" Margin="2.333,2" Stretch="UniformToFill"/>
+            <Image x:Name="Img3" Grid.Column="2" Margin="1.667,2,2,2" Stretch="UniformToFill"/>
+            <Image x:Name="Img4" Grid.Column="3" Margin="2,2,1.667,2" Stretch="UniformToFill"/>
+            <Image x:Name="Img5" Grid.Column="4" Margin="2.333,2,1.667,2" Stretch="UniformToFill"/>
         </Grid>
 
-        <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="25" Width="1200" Height="70" Background="#EDE7F6"/>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="25" Width="993" Height="70" Background="#EDE7F6"/>
 
 
-        <Grid Width="800" Height="575" Margin="197,80,196.333,7.667" Grid.RowSpan="2" >
+        <Grid Height="567" Margin="197,80,183.333,0" Grid.RowSpan="3" VerticalAlignment="Top" >
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -46,13 +61,13 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" BorderBrush="#7E57C2" BorderThickness="5" Margin="0,0,0,-0.333" Grid.RowSpan="2"/>
-            <Image Grid.Row="0" Width="200" HorizontalAlignment="Left"/>
-            <Image Grid.Row="0" Width="200"/>
-            <Image Grid.Row="0" Width="200" HorizontalAlignment="Right"/>
-            <Image Grid.Row="1"/>
-            <Image Grid.Row="1"/>
-            
+            <Border Grid.Column="0" BorderBrush="#7E57C2" BorderThickness="5" Grid.RowSpan="2" Margin="0,0,10.333,188.667"/>
+            <Image Grid.Row="0" Width="220" HorizontalAlignment="Left" Margin="33,5,0,5.333"/>
+            <Image Grid.Row="0" Width="220" Margin="290,5,290,5.333"/>
+            <Image Grid.Row="0" Width="220" HorizontalAlignment="Right" Margin="0,5,29,5.333"/>
+            <Image Width="220" HorizontalAlignment="Left" Margin="148,9.667,0,13" Grid.Row="1"/>
+            <Image Width="220" HorizontalAlignment="Right" Margin="0,9.667,148,13" Grid.Row="1"/>
+
         </Grid>
 
     </Grid>

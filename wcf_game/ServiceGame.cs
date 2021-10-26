@@ -71,5 +71,10 @@ namespace wcf_game
                 item.operationContext.GetCallbackChannel<IServerGameCallback>().MsgCallback(answer);
             }
         }
+
+        public void ReturnMsg(string msg, int id)
+        {
+
+        }
     }
 }

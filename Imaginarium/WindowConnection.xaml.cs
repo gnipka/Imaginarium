@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Imaginarium.ServiceHost;
+using Imaginarium.ServiceReference1;
+
+
 
 namespace Imaginarium
 {
@@ -40,6 +42,7 @@ namespace Imaginarium
             client = new ServiceGameClient(new System.ServiceModel.InstanceContext(this));
             mas = client.Connect(name);            
             pb.Value = mas[0];
+
             if (mas[1] == 1)
             {
                 lbMsg.Items.Add("Происходит подключение, в данный момент к серверу подключены: " + mas[1] + " игрок");
@@ -48,6 +51,17 @@ namespace Imaginarium
             else
             {
                 lbMsg.Items.Add("Происходит подключение, в данный момент к серверу подключены: " + mas[1] + " игрока");
+            }
+        }
+
+        private void pb_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if(e.NewValue == 2)
+            {
+                UserWindow userWindow = new UserWindow();
+                userWindow.name = name;
+                userWindow.Show();
+                this.Hide();
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using Imaginarium.ServiceHost;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,10 +30,17 @@ namespace Imaginarium
 
         private void Button_Click_StartGame(object sender, RoutedEventArgs e)
         {
-            WindowConnection windowConnection = new WindowConnection();
-            windowConnection.name = tbUserName.Text;
-            windowConnection.Show();
-            this.Hide();
+            if (tbUserName.Text != null)
+            {
+                WindowConnection windowConnection = new WindowConnection();
+                windowConnection.name = tbUserName.Text;
+                windowConnection.Show();
+                this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Заполните поле для ввода имени");
+            }
         }
     }
 }

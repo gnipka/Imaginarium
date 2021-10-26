@@ -29,6 +29,6 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ProgressBar x:Name="pb" Grid.Row="2" Minimum="0" Maximum="5" Height="20" Width="350" VerticalAlignment="Bottom" Margin="0 0 0 40" Style="{DynamicResource MaterialDesignLinearProgressBar}"/>
+        <ProgressBar x:Name="pb" Grid.Row="2" Minimum="0" Maximum="5" Height="20" Width="350" VerticalAlignment="Bottom" Margin="0 0 0 40" Style="{DynamicResource MaterialDesignLinearProgressBar}" ValueChanged="pb_ValueChanged"/>
     </Grid>
 </Window>
