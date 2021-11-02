@@ -22,6 +22,7 @@ namespace Imaginarium
     {
         ServiceGameClient client;
         public string name { get; set; }
+        public int ID { get; set; }
         public UserWindow()
         {
             InitializeComponent();
@@ -29,6 +30,7 @@ namespace Imaginarium
         }
         public void MsgCallback(string msg)
         {
+
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -45,6 +47,8 @@ namespace Imaginarium
             Img4.Source = new BitmapImage(new Uri("Images/" + nameImg[3] + ".jpg", UriKind.Relative));
             Img5.Source = new BitmapImage(new Uri("Images/" + nameImg[4] + ".jpg", UriKind.Relative));
             this.Title = "Пользователь " + name;
+            string msg = client.SendInstruct();
+            tbInstruct.Text = msg;
         }
     }
 }

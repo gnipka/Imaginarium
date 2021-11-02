@@ -23,6 +23,8 @@ namespace WcfHosting
         [OperationContract]
         int ReturnNameImage();
 
+        [OperationContract]
+        string SendInstruct();
     }
 
     public interface IServerGameCallback
@@ -35,12 +37,14 @@ namespace WcfHosting
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public int Count { get; set; }
         public OperationContext operationContext { get; set; }
     }
     public static class Container
     {
         public static List<int> nameImage = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 };
         public static List<int> nameImagePast = new List<int>();
+        public static int nextPlayer { get; set; }
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -72,6 +76,7 @@ namespace WcfHosting
             {
                 SendMsg(" К игре подключился " + user.Name + ". Все игроки собраны. Игра скоро начнется.", 0);
                 Console.WriteLine(" К игре подключился " + user.Name + ". Все игроки собраны.");
+                Console.WriteLine("Игра началась.");
                 
             }
             else
@@ -106,6 +111,22 @@ namespace WcfHosting
             }
             Container.nameImagePast.Add(Container.nameImage[index]);
             return Container.nameImage[index];
+        }
+
+        public string SendInstruct()
+        {
+            foreach (var item in users)
+            {
+                if (item.ID == Container.nextPlayer++)
+                {
+                    return"Вы ведущий. Выберите карту и придумайте к нему ассоциацию.";
+                }
+                else
+                {
+                    return"Ведущий выбирает карту.";
+                }
+            }
+            return "НИХУЯ НЕ РАБОТАЕТ";
         }
 
         public void SendMsg(string msg, int id)

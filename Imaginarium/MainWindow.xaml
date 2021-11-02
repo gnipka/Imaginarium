@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="#B39DDB"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="380" Width="580" WindowStartupLocation="CenterScreen">
+        Title="Вход в игру" Height="380" Width="580" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="115*" />
@@ -22,8 +22,8 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="Имаджинариум" VerticalAlignment="Center" FontSize="50" Foreground="#EDE7F6" FontWeight="DemiBold" Height="60" Margin="58,28,57.333,26.667" Width="378"/>
         <StackPanel Grid.Row="1"  Background="#EDE7F6" VerticalAlignment="Top">
-            <TextBox x:Name="tbUserName" materialDesign:HintAssist.HelperText="Введите ваше имя" IsReadOnly="False" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignTextBox}" Width="210" Height="40" Grid.ColumnSpan="2" FontSize="25" Margin="0 0 0 12"/>
-            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="Начать игру" Click="Button_Click_StartGame" Style="{StaticResource MaterialDesignFlatSecondaryLightBgButton}" Margin="0 5 0 5" Width="210" Height="40" FontSize="25"/>
+            <TextBox x:Name="tbUserName" materialDesign:HintAssist.HelperText="Введите ваше имя" IsReadOnly="False" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignTextBox}" TabIndex="0" Width="210" Height="40" Grid.ColumnSpan="2" FontSize="25" Margin="0 0 0 12"/>
+            <Button HorizontalAlignment="Center" IsDefault="True" VerticalAlignment="Center" Content="Начать игру" Click="Button_Click_StartGame" Style="{StaticResource MaterialDesignFlatSecondaryLightBgButton}" Margin="0 5 0 5" Width="210" Height="40" FontSize="25"/>
             <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="Правила игры" Style="{StaticResource MaterialDesignOutlinedLightButton}" Margin="0 0 0 5" Width="210" Height="40" FontSize="25"/>
             <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="Выход" Style="{StaticResource MaterialDesignOutlinedLightButton}" Margin="0 0 0 5" Width="210" Height="40" FontSize="25"/>
         </StackPanel>

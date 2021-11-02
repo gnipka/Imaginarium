@@ -24,6 +24,7 @@ namespace Imaginarium
     {
         ServiceGameClient client;
         int[] mas;
+
         public WindowConnection()
         {
             InitializeComponent();
@@ -60,6 +61,7 @@ namespace Imaginarium
             {
                 UserWindow userWindow = new UserWindow();
                 userWindow.name = name;
+                userWindow.ID = mas[0];
                 userWindow.Show();
                 this.Hide();
             }

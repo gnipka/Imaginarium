@@ -24,6 +24,7 @@ namespace Imaginarium
         public MainWindow()
         {
             InitializeComponent();
+            tbUserName.Focus();
         }
 
 

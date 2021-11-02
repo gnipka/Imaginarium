@@ -38,6 +38,12 @@ namespace Imaginarium.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnNameImage", ReplyAction="http://tempuri.org/IServiceGame/ReturnNameImageResponse")]
         System.Threading.Tasks.Task<int> ReturnNameImageAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/SendInstruct", ReplyAction="http://tempuri.org/IServiceGame/SendInstructResponse")]
+        string SendInstruct();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/SendInstruct", ReplyAction="http://tempuri.org/IServiceGame/SendInstructResponse")]
+        System.Threading.Tasks.Task<string> SendInstructAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -105,6 +111,14 @@ namespace Imaginarium.ServiceReference1 {
         
         public System.Threading.Tasks.Task<int> ReturnNameImageAsync() {
             return base.Channel.ReturnNameImageAsync();
+        }
+        
+        public string SendInstruct() {
+            return base.Channel.SendInstruct();
+        }
+        
+        public System.Threading.Tasks.Task<string> SendInstructAsync() {
+            return base.Channel.SendInstructAsync();
         }
     }
 }
