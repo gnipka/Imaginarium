@@ -23,6 +23,8 @@ namespace Imaginarium
         ServiceGameClient client;
         public string name { get; set; }
         public int ID { get; set; }
+        public string association { get; set; }
+        public int leaderID { get; set; }
         public UserWindow()
         {
             InitializeComponent();
@@ -30,7 +32,7 @@ namespace Imaginarium
         }
         public void MsgCallback(string msg)
         {
-
+            tbInstruct.Text = msg;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -47,8 +49,44 @@ namespace Imaginarium
             Img4.Source = new BitmapImage(new Uri("Images/" + nameImg[3] + ".jpg", UriKind.Relative));
             Img5.Source = new BitmapImage(new Uri("Images/" + nameImg[4] + ".jpg", UriKind.Relative));
             this.Title = "Пользователь " + name;
-            string msg = client.SendInstruct();
-            tbInstruct.Text = msg;
+            string[] str = new string[2];
+            str = client.SendInstruct();
+            tbInstruct.Text = str[0];
+            leaderID = Convert.ToInt32(str[1]);
+            
+        }
+
+        private void Img1_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ID == leaderID)
+            {
+
+                if (tbInstruct.Text != null && tbInstruct.Text != "Вы ведущий. Введите сюда Вашу ассоциацию, затем выберите картинку, к которой вы загадали ассоциацию, кликнув по ней.")
+                {
+                    association = tbInstruct.Text;
+                    MessageBoxResult result = MessageBox.Show("Отправляем вашу ассоциацию игрокам?", "Имаджинариум", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            client.SendMsg(association, ID);
+                            break;
+                        case MessageBoxResult.No:
+                            break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Прежде чем выбрать картинку, введите ассоциацию.");
+                }
+            }
+        }
+
+        private void tbInstruct_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (leaderID == ID)
+            {
+                tbInstruct.Clear();
+            }
         }
     }
 }

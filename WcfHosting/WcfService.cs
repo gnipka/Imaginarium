@@ -24,7 +24,7 @@ namespace WcfHosting
         int ReturnNameImage();
 
         [OperationContract]
-        string SendInstruct();
+        string[] SendInstruct();
     }
 
     public interface IServerGameCallback
@@ -113,20 +113,24 @@ namespace WcfHosting
             return Container.nameImage[index];
         }
 
-        public string SendInstruct()
+        public string[] SendInstruct()
         {
+            string[] str = new string[2];
+
+
             foreach (var item in users)
             {
                 if (item.ID == Container.nextPlayer++)
                 {
-                    return"Вы ведущий. Выберите карту и придумайте к нему ассоциацию.";
+                    str[0] = "Вы ведущий. Введите сюда вашу ассоциацию, затем выберите картинку, к которой вы загадали ассоциацию, кликнув по ней.";
+                    str[1] = Container.nextPlayer.ToString();
                 }
                 else
                 {
-                    return"Ведущий выбирает карту.";
+                    str[0] = "Ведущий выбирает карту.";
                 }
             }
-            return "НИХУЯ НЕ РАБОТАЕТ";
+            return str;
         }
 
         public void SendMsg(string msg, int id)
