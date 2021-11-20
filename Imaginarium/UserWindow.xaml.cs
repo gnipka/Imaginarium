@@ -20,11 +20,13 @@ namespace Imaginarium
     /// </summary>
     public partial class UserWindow : Window, IServiceGameCallback
     {
-        ServiceGameClient client;
+        public ServiceGameClient client { get; set; }
         public string name { get; set; }
         public int ID { get; set; }
         public string association { get; set; }
         public int leaderID { get; set; }
+        public string instruct { get; set; }
+
         public UserWindow()
         {
             InitializeComponent();
@@ -32,12 +34,14 @@ namespace Imaginarium
         }
         public void MsgCallback(string msg)
         {
+            tbInstruct.Text = String.Empty;
             tbInstruct.Text = msg;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             client = new ServiceGameClient(new System.ServiceModel.InstanceContext(this));
+           
             List<int> nameImg = new List<int>();
             for (int i = 0; i < 5; i++)
             {
@@ -50,10 +54,10 @@ namespace Imaginarium
             Img5.Source = new BitmapImage(new Uri("Images/" + nameImg[4] + ".jpg", UriKind.Relative));
             this.Title = "Пользователь " + name;
             string[] str = new string[2];
-            str = client.SendInstruct();
-            tbInstruct.Text = str[0];
-            leaderID = Convert.ToInt32(str[1]);
-            
+            str = client.SendInstruct(ID);
+            instruct = str[0];
+            tbInstruct.Text = instruct;
+            leaderID = Convert.ToInt32(str[1]);            
         }
 
         private void Img1_MouseDown(object sender, MouseButtonEventArgs e)
@@ -61,14 +65,14 @@ namespace Imaginarium
             if (ID == leaderID)
             {
 
-                if (tbInstruct.Text != null && tbInstruct.Text != "Вы ведущий. Введите сюда Вашу ассоциацию, затем выберите картинку, к которой вы загадали ассоциацию, кликнув по ней.")
+                if (tbInstruct.Text != null && tbInstruct.Text != instruct)
                 {
                     association = tbInstruct.Text;
                     MessageBoxResult result = MessageBox.Show("Отправляем вашу ассоциацию игрокам?", "Имаджинариум", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
                     switch (result)
                     {
                         case MessageBoxResult.Yes:
-                            client.SendMsg(association, ID);
+                            client.SendMsgAssoc(association, ID);
                             break;
                         case MessageBoxResult.No:
                             break;
@@ -87,6 +91,17 @@ namespace Imaginarium
             {
                 tbInstruct.Clear();
             }
+        }
+
+        public void SetAssoc(string msg)
+        {
+            tbInstruct.Text = String.Empty;
+            tbInstruct.Text = msg;
+        }
+
+        public void MsgCallbackAssoc(string msg)
+        {
+
         }
     }
 }

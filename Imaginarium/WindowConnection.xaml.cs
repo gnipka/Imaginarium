@@ -38,6 +38,12 @@ namespace Imaginarium
             pb.Value++;
         }
 
+        public void MsgCallbackAssoc(string msg)
+        {
+            UserWindow userWindow = new UserWindow();
+            userWindow.SetAssoc(msg);
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             client = new ServiceGameClient(new System.ServiceModel.InstanceContext(this));
@@ -57,7 +63,7 @@ namespace Imaginarium
 
         private void pb_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if(e.NewValue == 2)
+            if(e.NewValue == 3)
             {
                 UserWindow userWindow = new UserWindow();
                 userWindow.name = name;
@@ -65,6 +71,12 @@ namespace Imaginarium
                 userWindow.Show();
                 this.Hide();
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            UserWindow userWindow = new UserWindow();
+            userWindow.client = client;
         }
     }
 }

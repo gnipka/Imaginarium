@@ -42,7 +42,7 @@
             <RowDefinition Height="282*"/>
         </Grid.RowDefinitions>
 
-        <TextBox x:Name="tbInstruct" Grid.Row="0" HorizontalAlignment="Left" PreviewMouseLeftButtonDown="tbInstruct_PreviewMouseLeftButtonDown" VerticalAlignment="Top" FontSize="25" Width="993" Height="39" Background="#EDE7F6" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="tbInstruct" TextWrapping="Wrap" Grid.Row="0" HorizontalAlignment="Left" PreviewMouseLeftButtonDown="tbInstruct_PreviewMouseLeftButtonDown" VerticalAlignment="Top" FontSize="25" Width="993" Height="71" Background="#EDE7F6" Grid.ColumnSpan="2"/>
         <Rectangle Grid.ColumnSpan="2" StrokeThickness="3"  StrokeDashArray="4 3" Stroke="Gray" Fill="Gray" Opacity="0.2" HorizontalAlignment="Left" Height="261" Margin="0,80,0,0" Grid.Row="1" VerticalAlignment="Top" Width="993"/>
         <Image x:Name="Img1" Margin="37,114,14.667,36.667" Grid.Row="1" RenderTransformOrigin="0.5,1" MouseDown="Img1_MouseDown" Cursor="Hand" />
         <Image x:Name="Img2" Margin="0.333,114,601.334,36.667" Grid.Row="1"  RenderTransformOrigin="0.5,1" Grid.Column="1" MouseDown="Img1_MouseDown" Cursor="Hand"/>

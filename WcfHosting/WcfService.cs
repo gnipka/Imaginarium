@@ -20,17 +20,25 @@ namespace WcfHosting
         [OperationContract(IsOneWay = true)]
         void SendMsg(string msg, int id);
 
+        [OperationContract(IsOneWay = true)]
+        void SendMsgAssoc(string msg, int id);
         [OperationContract]
         int ReturnNameImage();
 
         [OperationContract]
-        string[] SendInstruct();
+        string[] SendInstruct(int ID);
+
+        [OperationContract]
+        void SendAssoc(string assoc, int ID);
     }
 
     public interface IServerGameCallback
     {
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay =true)]
         void MsgCallback(string msg);
+
+        [OperationContract(IsOneWay = true)]
+        void MsgCallbackAssoc(string msg);
     }
 
     public class ServerUser
@@ -44,7 +52,7 @@ namespace WcfHosting
     {
         public static List<int> nameImage = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31 };
         public static List<int> nameImagePast = new List<int>();
-        public static int nextPlayer { get; set; }
+        public static int nextPlayer { get; set; } = 1;
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -89,6 +97,13 @@ namespace WcfHosting
             return mas;
         }
 
+        public void SendAssoc(string assoc, int ID)
+        {
+            var user = users.FirstOrDefault(i => i.ID == ID);
+            SendMsg($"Пользователь {user.Name} загадал ассоциацию: {assoc}", 0);
+        }
+
+
         public void Disconnect(int id)
         {
             var user = users.FirstOrDefault(i => i.ID == id);
@@ -113,24 +128,37 @@ namespace WcfHosting
             return Container.nameImage[index];
         }
 
-        public string[] SendInstruct()
+        public string[] SendInstruct(int ID)
         {
             string[] str = new string[2];
 
-
-            foreach (var item in users)
-            {
-                if (item.ID == Container.nextPlayer++)
+                if (ID == Container.nextPlayer)
                 {
                     str[0] = "Вы ведущий. Введите сюда вашу ассоциацию, затем выберите картинку, к которой вы загадали ассоциацию, кликнув по ней.";
                     str[1] = Container.nextPlayer.ToString();
+                    Container.nextPlayer++;
                 }
                 else
                 {
                     str[0] = "Ведущий выбирает карту.";
                 }
-            }
             return str;
+        }
+
+        public void SendMsgAssoc(string msg, int id)
+        {
+            foreach (var item in users)
+            {
+                string answer = DateTime.Now.ToShortTimeString() + " ";
+                var user = users.FirstOrDefault(i => i.ID == id);
+                if (user != null)
+                {
+                    answer += ": " + user.Name + " загадал ассоциацию: ";
+                }
+
+                answer += msg;
+                item.operationContext.GetCallbackChannel<IServerGameCallback>().MsgCallbackAssoc(answer);
+            }
         }
 
         public void SendMsg(string msg, int id)
@@ -145,7 +173,6 @@ namespace WcfHosting
                 }
 
                 answer += msg;
-
                 item.operationContext.GetCallbackChannel<IServerGameCallback>().MsgCallback(answer);
             }
         }

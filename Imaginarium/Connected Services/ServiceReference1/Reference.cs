@@ -33,6 +33,12 @@ namespace Imaginarium.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServiceGame/SendMsg")]
         System.Threading.Tasks.Task SendMsgAsync(string msg, int id);
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServiceGame/SendMsgAssoc")]
+        void SendMsgAssoc(string msg, int id);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServiceGame/SendMsgAssoc")]
+        System.Threading.Tasks.Task SendMsgAssocAsync(string msg, int id);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnNameImage", ReplyAction="http://tempuri.org/IServiceGame/ReturnNameImageResponse")]
         int ReturnNameImage();
         
@@ -40,10 +46,16 @@ namespace Imaginarium.ServiceReference1 {
         System.Threading.Tasks.Task<int> ReturnNameImageAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/SendInstruct", ReplyAction="http://tempuri.org/IServiceGame/SendInstructResponse")]
-        string[] SendInstruct();
+        string[] SendInstruct(int ID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/SendInstruct", ReplyAction="http://tempuri.org/IServiceGame/SendInstructResponse")]
-        System.Threading.Tasks.Task<string[]> SendInstructAsync();
+        System.Threading.Tasks.Task<string[]> SendInstructAsync(int ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/SendAssoc", ReplyAction="http://tempuri.org/IServiceGame/SendAssocResponse")]
+        void SendAssoc(string assoc, int ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/SendAssoc", ReplyAction="http://tempuri.org/IServiceGame/SendAssocResponse")]
+        System.Threading.Tasks.Task SendAssocAsync(string assoc, int ID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -51,6 +63,9 @@ namespace Imaginarium.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServiceGame/MsgCallback")]
         void MsgCallback(string msg);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServiceGame/MsgCallbackAssoc")]
+        void MsgCallbackAssoc(string msg);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -105,6 +120,14 @@ namespace Imaginarium.ServiceReference1 {
             return base.Channel.SendMsgAsync(msg, id);
         }
         
+        public void SendMsgAssoc(string msg, int id) {
+            base.Channel.SendMsgAssoc(msg, id);
+        }
+        
+        public System.Threading.Tasks.Task SendMsgAssocAsync(string msg, int id) {
+            return base.Channel.SendMsgAssocAsync(msg, id);
+        }
+        
         public int ReturnNameImage() {
             return base.Channel.ReturnNameImage();
         }
@@ -113,12 +136,20 @@ namespace Imaginarium.ServiceReference1 {
             return base.Channel.ReturnNameImageAsync();
         }
         
-        public string[] SendInstruct() {
-            return base.Channel.SendInstruct();
+        public string[] SendInstruct(int ID) {
+            return base.Channel.SendInstruct(ID);
         }
         
-        public System.Threading.Tasks.Task<string[]> SendInstructAsync() {
-            return base.Channel.SendInstructAsync();
+        public System.Threading.Tasks.Task<string[]> SendInstructAsync(int ID) {
+            return base.Channel.SendInstructAsync(ID);
+        }
+        
+        public void SendAssoc(string assoc, int ID) {
+            base.Channel.SendAssoc(assoc, ID);
+        }
+        
+        public System.Threading.Tasks.Task SendAssocAsync(string assoc, int ID) {
+            return base.Channel.SendAssocAsync(assoc, ID);
         }
     }
 }

@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="#B39DDB"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Подключение" Height="300" Width="450" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded">
+        Title="Подключение" Height="300" Width="450" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded" Closed="Window_Closed">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
