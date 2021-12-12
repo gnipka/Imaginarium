@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,8 +21,12 @@ namespace Imaginarium
     /// <summary>
     /// Логика взаимодействия для WindowConnection.xaml
     /// </summary>
+    /// 
+    [CallbackBehaviorAttribute(ConcurrencyMode = ConcurrencyMode.Multiple)]
     public partial class WindowConnection : Window, IServiceGameCallback
     {
+
+        UserWindow userWindow;
         ServiceGameClient client;
         int[] mas;
 
@@ -30,19 +35,23 @@ namespace Imaginarium
             InitializeComponent();
         }
         public string name { get; set; }
+        /// <summary>
+        /// true - если вызываем ..., false - если вызываем user.ReturnMessageCallback в методе MsgCallback
+        /// </summary>
+        public bool signal { get; set; }
 
 
-        public void MsgCallback(string msg)
-        {
-            lbMsg.Items.Add(msg);
-            pb.Value++;
-        }
+        //public void GetMsg(string msg)
+        //{
+        //   lbMsg.Items.Add(msg);
+        //   pb.Value++;
+        //}
 
-        public void MsgCallbackAssoc(string msg)
-        {
-            UserWindow userWindow = new UserWindow();
-            userWindow.SetAssoc(msg);
-        }
+        //public void MsgCallbackAssoc(string msg)
+        //{
+        //    UserWindow userWindow = new UserWindow();
+        //    userWindow.SetAssoc(msg);
+        //}
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -63,20 +72,42 @@ namespace Imaginarium
 
         private void pb_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if(e.NewValue == 3)
+            if(e.NewValue == 5)
             {
-                UserWindow userWindow = new UserWindow();
+                userWindow = new UserWindow();
                 userWindow.name = name;
                 userWindow.ID = mas[0];
+                userWindow.client = client;
                 userWindow.Show();
-                this.Hide();
+               //this.Close();
             }
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            UserWindow userWindow = new UserWindow();
-            userWindow.client = client;
+            client.Close();
+        }
+
+        public void MsgCallback(string msg)
+        {
+            if (userWindow != null)
+            {
+                if (signal)
+                {
+                    userWindow.ReturnImage(msg);
+                    signal = false;
+                }
+                else
+                {
+                    userWindow.ReturnMsgCallback(msg);
+                    signal = true;
+                }
+            }
+            else
+            {
+                lbMsg.Items.Add(msg);
+                pb.Value++;
+            }
         }
     }
 }
