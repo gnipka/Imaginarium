@@ -119,6 +119,7 @@ namespace Imaginarium
                             Image image = (Image)sender;
                             //отправляем выбранную картинку на сервер
                             client.AddImageInRound(ID, image.Source.ToString());
+                            image.Source = new BitmapImage(new Uri("Images/" + client.ReturnNameImage() + ".jpg", UriKind.Relative));
                             tbInstruct.Text = $"Игроки выбирают карту, которая соответствует Вашей ассоциации - {association}";
                             break;
                         case MessageBoxResult.No:
@@ -139,6 +140,8 @@ namespace Imaginarium
                         Image image = (Image)sender;
                         //отправляем выбранную картинку на сервер
                         client.AddImageInRound(ID, image.Source.ToString());
+                        image.Source = new BitmapImage(new Uri("Images/" + client.ReturnNameImage() + ".jpg", UriKind.Relative));
+                        tbInstruct.Text = "Другие игроки еще выбирают карту, ожидайте";
                         signal = false;
                         break;
                     case MessageBoxResult.No:
