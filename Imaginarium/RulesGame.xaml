@@ -1,0 +1,69 @@
+﻿<Window x:Class="Imaginarium.RulesGame"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Imaginarium"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="#B39DDB"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Вход в игру" Height="410" Width="580" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="89*" />
+            <RowDefinition Height="261*"/>
+
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="Правила игры" VerticalAlignment="Center" FontSize="50" Foreground="#EDE7F6" FontWeight="DemiBold" Height="60" Margin="114,26,118.333,10.667" Width="341"/>
+        <StackPanel  Background="#EDE7F6" VerticalAlignment="Top" Height="256" Margin="0,0.333,0.333,0" Grid.Row="1">
+            <RichTextBox IsReadOnly="True" Margin="5,0,0,0" VerticalScrollBarVisibility="Auto" Height="242" HorizontalAlignment="Left" Width="558" >
+                <RichTextBox.Resources>
+                    <Style TargetType="{x:Type Paragraph}">
+                        <Setter Property="Margin" Value="0"/>
+                    </Style>
+                </RichTextBox.Resources>
+                <FlowDocument>
+                    <Paragraph Margin="5" FontSize="18"  FontWeight="Bold" TextAlignment="Center">
+                        «Игроки подбирают ассоциации к своим картам и угадывают карты других игроков по их ассоциациям»
+                    </Paragraph>
+                    <Paragraph Margin="5" FontSize="16" >
+                        1) На каждом ходу один из игроков исполняет роль ведущего, который задает ассоциацию.
+                    </Paragraph>
+                    <Paragraph Margin="5" FontSize="16">
+                        2) Ведущий вводит ассоциацию к одной из своих карт, далее кликнув по нужной карте, отправляет ее другим игрокам. Ассоциацией может быть что угодно: слово, предложение, цитата. Ведущий ограничен лишь своей фантазией.
+                    </Paragraph>
+                    <Paragraph Margin="5" FontSize="16">
+                        3) Остальные игроки выбирают среди своих карт одну такую, которая лучше всего подходит под ассоциацию ведущего, кликнув по ней.
+                    </Paragraph>
+                    <Paragraph  Margin="5" FontSize="16">
+                        4) Теперь основная задача игроков - догадаться, какую именно карту загадал ведущий. Для того, чтобы сделать выбор, следует кликнуть по карте. После того, как все игроки приняли решение, подсчитываются баллы и отображаются во вкладке «Рейтинг».
+                    </Paragraph>
+                    <Paragraph Margin="5" FontSize="16">
+                        - Если карту ведущего отгадали все игроки, то у него отнимается 3 балла, а остальным игрокам достается 1 балл
+                    </Paragraph>
+                    <Paragraph Margin="5" FontSize="16">
+                        - Если карту ведущего никто не отгадал, то у него остается столько же очков, сколько было ранее, а остальные игроки получают столько баллов, сколько играков выбрало их карты
+                    </Paragraph>
+                    <Paragraph Margin="5" FontSize="16">
+                        - В любом другом случае по 3 очка получают все игроки, правильно угадавшие карточку. Ведущий получает 3 очка плюс по очку за каждого угадавшего его игрока. Все игроки получают по одному очку за каждого игрока, который угадал их карты
+                    </Paragraph>
+                    <Paragraph Margin="5" FontSize="16">
+                        5) Игра заканчивается, когда в наборе заканчиваются карты. Победителем становится тот игрок, у кого больше всех очков.
+                    </Paragraph>
+                    <Paragraph FontSize="18" FontWeight="Bold" TextAlignment="Center">
+                        Приятной вам игры!
+                    </Paragraph>
+                    <Paragraph  TextAlignment="Center">
+                        <Image Margin="-3" Height="150" Source="pack://application:,,,/Images/image.png"/>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+        </StackPanel>
+    </Grid>
+</Window>

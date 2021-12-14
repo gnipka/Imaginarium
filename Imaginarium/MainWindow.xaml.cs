@@ -43,5 +43,11 @@ namespace Imaginarium
                 MessageBox.Show("Заполните поле для ввода имени");
             }
         }
+
+        private void Button_Click_RulesGame(object sender, RoutedEventArgs e)
+        {
+            RulesGame rulesGame = new RulesGame();
+            rulesGame.Show();
+        }
     }
 }

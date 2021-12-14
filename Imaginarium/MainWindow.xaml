@@ -24,7 +24,7 @@
         <StackPanel Grid.Row="1"  Background="#EDE7F6" VerticalAlignment="Top">
             <TextBox x:Name="tbUserName" materialDesign:HintAssist.HelperText="Введите ваше имя" IsReadOnly="False" HorizontalAlignment="Center" Style="{StaticResource MaterialDesignTextBox}" TabIndex="0" Width="210" Height="40" Grid.ColumnSpan="2" FontSize="25" Margin="0 0 0 12"/>
             <Button HorizontalAlignment="Center" IsDefault="True" VerticalAlignment="Center" Content="Начать игру" Click="Button_Click_StartGame" Style="{StaticResource MaterialDesignFlatSecondaryLightBgButton}" Margin="0 5 0 5" Width="210" Height="40" FontSize="25"/>
-            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="Правила игры" Style="{StaticResource MaterialDesignOutlinedLightButton}" Margin="0 0 0 5" Width="210" Height="40" FontSize="25"/>
+            <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="Правила игры" Click="Button_Click_RulesGame" Style="{StaticResource MaterialDesignOutlinedLightButton}" Margin="0 0 0 5" Width="210" Height="40" FontSize="25"/>
             <Button HorizontalAlignment="Center" VerticalAlignment="Center" Content="Выход" Style="{StaticResource MaterialDesignOutlinedLightButton}" Margin="0 0 0 5" Width="210" Height="40" FontSize="25"/>
         </StackPanel>
     </Grid>
