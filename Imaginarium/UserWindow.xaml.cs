@@ -69,6 +69,7 @@ namespace Imaginarium
         /// Маячок, чтобы игроки после получения ассоциации могли выбрать картинку
         /// </summary>
         public bool signal { get; set; }
+        public Dictionary<int, int> scoring;
 
         public UserWindow()
         {
@@ -157,7 +158,7 @@ namespace Imaginarium
             }
         }
         /// <summary>
-        /// ПОлучение ассоциации с сервера
+        /// Получение ассоциации с сервера
         /// </summary>
         /// <param name="msg"></param>
         public void ReturnMsgCallback(string msg)
@@ -166,6 +167,13 @@ namespace Imaginarium
             {
                 tbInstruct.Text = msg;
             }
+        }
+        public void ReturnScoringPlayers()
+        {
+            scoring =  client.ScoringPoints();
+            TopPlayers topPlayers = new TopPlayers();
+            topPlayers.scoring = scoring;
+            topPlayers.Show();
         }
 
         public void ReturnImage(string images)
@@ -197,7 +205,7 @@ namespace Imaginarium
                     string nameImage = image.Source.ToString();
                     client.AddAnswer(nameImage, ID);
                     Dictionary<string, int> CardAndName = client.ReturnCardAndName();
-                    
+
                     foreach (var item in CardAndName)
                     {
                         var source = new BitmapImage(new Uri("pack://application:,,,/Imaginarium;component/Images/" + item.Value + ".jpg", UriKind.Absolute));
@@ -206,7 +214,7 @@ namespace Imaginarium
                             tb1.Text = item.Key;
                         }
                         else if(Img22.Source.ToString() == source.ToString())
-                        { 
+                        {
                             tb2.Text = item.Key;
                         }
                         else if (Img33.Source.ToString() == source.ToString())
@@ -222,14 +230,7 @@ namespace Imaginarium
                             tb5.Text = item.Key;
                         }
                     }
-                    while (true)
-                    {
-                        if (client.CheckCountAnswerPlayer())
-                        {
-                            break;
-                        }
-                    }
-                    client.ScoringPoints();
+                    tbInstruct.Text = "Ваш ответ отправлен. Ожидайте пока все участники выберут карту.";
                     break;
                 case MessageBoxResult.No:
                     break;

@@ -78,12 +78,6 @@
   <wsdl:message name="IServiceGame_AddAnswer_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddAnswerResponse" />
   </wsdl:message>
-  <wsdl:message name="IServiceGame_CheckCountAnswerPlayer_InputMessage">
-    <wsdl:part name="parameters" element="tns:CheckCountAnswerPlayer" />
-  </wsdl:message>
-  <wsdl:message name="IServiceGame_CheckCountAnswerPlayer_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CheckCountAnswerPlayerResponse" />
-  </wsdl:message>
   <wsdl:message name="IServiceGame_ReturnCardAndName_InputMessage">
     <wsdl:part name="parameters" element="tns:ReturnCardAndName" />
   </wsdl:message>
@@ -123,10 +117,6 @@
     <wsdl:operation name="AddAnswer">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/AddAnswer" message="tns:IServiceGame_AddAnswer_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceGame/AddAnswerResponse" message="tns:IServiceGame_AddAnswer_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="CheckCountAnswerPlayer">
-      <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/CheckCountAnswerPlayer" message="tns:IServiceGame_CheckCountAnswerPlayer_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IServiceGame/CheckCountAnswerPlayerResponse" message="tns:IServiceGame_CheckCountAnswerPlayer_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ReturnCardAndName">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/ReturnCardAndName" message="tns:IServiceGame_ReturnCardAndName_InputMessage" />
@@ -198,15 +188,6 @@
     </wsdl:operation>
     <wsdl:operation name="AddAnswer">
       <soap12:operation soapAction="http://tempuri.org/IServiceGame/AddAnswer" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CheckCountAnswerPlayer">
-      <soap12:operation soapAction="http://tempuri.org/IServiceGame/CheckCountAnswerPlayer" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

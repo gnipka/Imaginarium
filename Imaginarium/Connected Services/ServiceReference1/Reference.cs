@@ -63,12 +63,6 @@ namespace Imaginarium.ServiceReference1 {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/AddAnswer", ReplyAction="http://tempuri.org/IServiceGame/AddAnswerResponse")]
         System.Threading.Tasks.Task AddAnswerAsync(string nameImage, int ID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/CheckCountAnswerPlayer", ReplyAction="http://tempuri.org/IServiceGame/CheckCountAnswerPlayerResponse")]
-        bool CheckCountAnswerPlayer();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/CheckCountAnswerPlayer", ReplyAction="http://tempuri.org/IServiceGame/CheckCountAnswerPlayerResponse")]
-        System.Threading.Tasks.Task<bool> CheckCountAnswerPlayerAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnCardAndName", ReplyAction="http://tempuri.org/IServiceGame/ReturnCardAndNameResponse")]
         System.Collections.Generic.Dictionary<string, int> ReturnCardAndName();
         
@@ -173,14 +167,6 @@ namespace Imaginarium.ServiceReference1 {
         
         public System.Threading.Tasks.Task AddAnswerAsync(string nameImage, int ID) {
             return base.Channel.AddAnswerAsync(nameImage, ID);
-        }
-        
-        public bool CheckCountAnswerPlayer() {
-            return base.Channel.CheckCountAnswerPlayer();
-        }
-        
-        public System.Threading.Tasks.Task<bool> CheckCountAnswerPlayerAsync() {
-            return base.Channel.CheckCountAnswerPlayerAsync();
         }
         
         public System.Collections.Generic.Dictionary<string, int> ReturnCardAndName() {

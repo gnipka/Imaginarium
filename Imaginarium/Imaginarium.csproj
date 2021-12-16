@@ -96,6 +96,9 @@
     <Compile Include="RulesGame.xaml.cs">
       <DependentUpon>RulesGame.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TopPlayers.xaml.cs">
+      <DependentUpon>TopPlayers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserWindow.xaml.cs">
       <DependentUpon>UserWindow.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="RulesGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TopPlayers.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

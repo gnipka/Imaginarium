@@ -94,18 +94,6 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="CheckCountAnswerPlayer">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="CheckCountAnswerPlayerResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="CheckCountAnswerPlayerResult" type="xs:boolean" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="ReturnCardAndName">
     <xs:complexType>
       <xs:sequence />

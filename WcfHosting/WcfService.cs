@@ -66,12 +66,6 @@ namespace WcfHosting
         [OperationContract]
         void AddAnswer(string nameImage, int ID);
         /// <summary>
-        /// Проверка все ли участники выбрали карту, которую считают картой ведущего
-        /// </summary>
-        /// <returns></returns>
-        [OperationContract]
-        bool CheckCountAnswerPlayer();
-        /// <summary>
         /// Возвращает имя игрока и номер карты, чтобы отобразить после окончания раунда
         /// </summary>
         /// <returns></returns>
@@ -120,6 +114,7 @@ namespace WcfHosting
         /// Указатель ведущего
         /// </summary>
         public static int nextPlayer { get; set; } = 1;
+        public const int CountPlayers = 5;
         /// <summary>
         /// Позиции, на которых будут размещаться карты, после выбора всех участников
         /// </summary>
@@ -127,7 +122,7 @@ namespace WcfHosting
         /// <summary>
         /// Рейтинг участников, ID игрока и количество очков
         /// </summary>
-        public static Dictionary<int, int> Top = new Dictionary<int, int>();
+
         /// <summary>
         /// Карты, которые выбрали игроки, считая, что они подходят под ассоциацию ведущего
         /// </summary>
@@ -140,7 +135,14 @@ namespace WcfHosting
 
     public class ServiceGame : IServiceGame
     {
+        /// <summary>
+        /// Список участников
+        /// </summary>
         List<ServerUser> users = new List<ServerUser>();
+        /// <summary>
+        /// Рейтинг участников, ID игрока и количество очков
+        /// </summary>
+        Dictionary<int, int> Top = new Dictionary<int, int>();
         int nextID = 1;
 
         public int[] Connect(string name)
@@ -155,7 +157,7 @@ namespace WcfHosting
                 operationContext = OperationContext.Current
             };
             //Добавляем нового игрока в рейтинг для подсчета очков
-            Container.Top.Add(nextID, 0);
+            Top.Add(nextID, 0);
             nextID++;
             if (users.Count < 4)
             {
@@ -229,7 +231,7 @@ namespace WcfHosting
         public string ReturnNameImage()
         {
             Random rnd = new Random();
-            int index = rnd.Next(Container.nameImage.Count - 1);
+            int index = rnd.Next(0, Container.nameImage.Count - 1);
 
             while (Container.nameImagePast.Contains(Container.nameImage[index]))
             {
@@ -247,7 +249,6 @@ namespace WcfHosting
         public string[] SendInstruct(int ID)
         {
             string[] str = new string[2];
-            Container.Top.Clear();
 
             if (ID == Container.nextPlayer)
             {
@@ -271,18 +272,14 @@ namespace WcfHosting
             int number = 0;
             int.TryParse(string.Join("", nameImage.Where(c => char.IsDigit(c))), out number);
             Container.ChoicePlayers.Add(ID, number);
-        }
-        /// <summary>
-        /// Проверяем все ли игроки выбрали карту
-        /// </summary>
-        /// <returns></returns>
-        public bool CheckCountAnswerPlayer()
-        {
-            if (Container.ChoicePlayers.Count == 4)
+            if(Container.ChoicePlayers.Count == Container.CountPlayers - 1)
             {
-                return true;
+                string answer = "Ready";
+                foreach (var item in users)
+                {
+                    item.operationContext.GetCallbackChannel<IServerGameCallback>().MsgCallback(answer);
+                }
             }
-            return false;
         }
         /// <summary>
         /// Подсчет очков
@@ -296,20 +293,20 @@ namespace WcfHosting
             {
                 if (item.Value == Container.nameImageRound.FirstOrDefault(x => x.Key == Container.nextPlayer).Value)
                 {
-                    Container.Top[item.Key] += 1;
-                    Container.Top[Container.nextPlayer] += 1;
+                    Top[item.Key] += 1;
+                    Top[Container.nextPlayer] += 1;
                     count++;
                 }
                 else if (Container.nameImageRound.Values.Contains(item.Value))
                 {
                     //Добавляем очко игроку, карту которого угадали
-                    Container.Top[Container.nameImageRound.FirstOrDefault(x => x.Value == item.Value).Key] += 1;
+                    Top[Container.nameImageRound.FirstOrDefault(x => x.Value == item.Value).Key] += 1;
                 }
             }
             if (count == 4)
             {
                 // отнимаем у ведущего все баллы которые он получил от игроков + 3 балла
-                Container.Top[Container.nextPlayer] -= 7;
+                Top[Container.nextPlayer] -= 7;
             }
             else
             {
@@ -317,12 +314,13 @@ namespace WcfHosting
                 {
                     if (item.Value == Container.nameImageRound.FirstOrDefault(x => x.Key == Container.nextPlayer).Value)
                     {
-                        Container.Top[item.Key] += 2;
+                        Top[item.Key] += 2;
                     }
                 }
-                Container.Top[Container.nextPlayer] += 3;
+                Top[Container.nextPlayer] += 3;
             }
-            return Container.Top;
+            Top = Top.OrderBy(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+            return Top;
         }
         public Dictionary<string, int> ReturnCardAndName()
         {

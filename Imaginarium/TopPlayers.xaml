@@ -1,0 +1,51 @@
+﻿<Window x:Class="Imaginarium.TopPlayers"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Imaginarium"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="#B39DDB"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Вход в игру" Height="410" Width="580" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,0.333,14.667">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="89*" />
+            <RowDefinition Height="261*"/>
+
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="Рейтинг участников" VerticalAlignment="Center" FontSize="50" Foreground="#EDE7F6" FontWeight="DemiBold" Height="60" Margin="63,26,10.333,10.667" Width="500"/>
+        <Grid x:Name="grid" Margin="0, 10, 0, 10 " Grid.Row="1" Background="White" ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="tb00" Grid.Row="0" Grid.Column="0"/>
+            <TextBox x:Name="tb01" Grid.Row="0" Grid.Column="1"/>
+            <TextBox x:Name="tb11" Grid.Row="1" Grid.Column="1"/>
+            <TextBox x:Name="tb10" Grid.Row="1" Grid.Column="0"/>
+            <TextBox x:Name="tb20" Grid.Row="2" Grid.Column="0"/>
+            <TextBox x:Name="tb21" Grid.Row="2" Grid.Column="1"/>
+            <TextBox x:Name="tb30"  Grid.Row="3" Grid.Column="0"/>
+            <TextBox x:Name="tb31"  Grid.Row="3" Grid.Column="1"/>
+            <TextBox x:Name="tb40"  Grid.Row="4" Grid.Column="0"/>
+            <TextBox x:Name="tb41"  Grid.Row="4" Grid.Column="1"/>
+            <TextBox x:Name="tb50"  Grid.Row="5" Grid.Column="0"/>
+            <TextBox x:Name="tb51"  Grid.Row="5" Grid.Column="1"/>
+        </Grid>
+    </Grid>
+</Window>

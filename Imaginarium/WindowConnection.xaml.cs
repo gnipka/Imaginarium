@@ -40,19 +40,6 @@ namespace Imaginarium
         /// </summary>
         public bool signal { get; set; }
 
-
-        //public void GetMsg(string msg)
-        //{
-        //   lbMsg.Items.Add(msg);
-        //   pb.Value++;
-        //}
-
-        //public void MsgCallbackAssoc(string msg)
-        //{
-        //    UserWindow userWindow = new UserWindow();
-        //    userWindow.SetAssoc(msg);
-        //}
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             client = new ServiceGameClient(new System.ServiceModel.InstanceContext(this));
@@ -79,7 +66,6 @@ namespace Imaginarium
                 userWindow.ID = mas[0];
                 userWindow.client = client;
                 userWindow.Show();
-               //this.Close();
             }
         }
 
@@ -92,7 +78,11 @@ namespace Imaginarium
         {
             if (userWindow != null)
             {
-                if (signal)
+                if(msg == "Ready")
+                {
+                    userWindow.ReturnScoringPlayers();
+                }
+                else if (signal)
                 {
                     userWindow.ReturnImage(msg);
                     signal = false;
