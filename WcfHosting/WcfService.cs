@@ -12,29 +12,71 @@ namespace WcfHosting
     [ServiceContract(CallbackContract = typeof(IServerGameCallback))]
     public interface IServiceGame
     {
+        /// <summary>
+        /// Подключение игрока
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [OperationContract]
         int[] Connect(string name);
-
+        /// <summary>
+        /// Отключение игрока
+        /// </summary>
+        /// <param name="id"></param>
         [OperationContract]
         void Disconnect(int id);
-
+        /// <summary>
+        /// Рассылка сообщения всем игрокам
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="id"></param>
         [OperationContract(IsOneWay = true)]
         void SendMsg(string msg, int id);
-
-        //[OperationContract(IsOneWay = true)]
-        //void SendMsgAssoc(string msg, int id);
+        /// <summary>
+        /// Рандомный выбор карты
+        /// </summary>
+        /// <returns></returns>
         [OperationContract]
-        int ReturnNameImage();
-
+        string ReturnNameImage();
+        /// <summary>
+        /// Выбор ведущего
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         [OperationContract]
         string[] SendInstruct(int ID);
-
+        /// <summary>
+        /// Добавление карты и ID игрока (карта, которая подходит под ассоциацию ведущего) в список (nameImageRound)
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="nameImage"></param>
         [OperationContract(IsOneWay = true)]
         void AddImageInRound(int ID, string nameImage);
-
-
-        //[OperationContract]
-        //void SendAssoc(string assoc, int ID);
+        /// <summary>
+        /// Подсчет очков, добавление их в список (Top)
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        Dictionary<int, int> ScoringPoints();
+        /// <summary>
+        /// Добавление карты, которую игрок считает картой ведущего, в список (ChoicePlayers)
+        /// </summary>
+        /// <param name="nameImage"></param>
+        /// <param name="ID"></param>
+        [OperationContract]
+        void AddAnswer(string nameImage, int ID);
+        /// <summary>
+        /// Проверка все ли участники выбрали карту, которую считают картой ведущего
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        bool CheckCountAnswerPlayer();
+        /// <summary>
+        /// Возвращает имя игрока и номер карты, чтобы отобразить после окончания раунда
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        Dictionary<string, int> ReturnCardAndName();
     }
 
 
@@ -78,11 +120,24 @@ namespace WcfHosting
         /// Указатель ведущего
         /// </summary>
         public static int nextPlayer { get; set; } = 1;
+        /// <summary>
+        /// Позиции, на которых будут размещаться карты, после выбора всех участников
+        /// </summary>
         public static List<int> rnd = new List<int>();
+        /// <summary>
+        /// Рейтинг участников, ID игрока и количество очков
+        /// </summary>
+        public static Dictionary<int, int> Top = new Dictionary<int, int>();
+        /// <summary>
+        /// Карты, которые выбрали игроки, считая, что они подходят под ассоциацию ведущего
+        /// </summary>
+        public static Dictionary<int, int> ChoicePlayers = new Dictionary<int, int>();
+
+
     }
 
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true)]
-    
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple, IncludeExceptionDetailInFaults = true, UseSynchronizationContext = false)]
+
     public class ServiceGame : IServiceGame
     {
         List<ServerUser> users = new List<ServerUser>();
@@ -92,35 +147,32 @@ namespace WcfHosting
         {
             int[] mas = new int[2];
 
-
+            //Создаем новый экземпляр класса ServerUser, добавляем нового игрока
             ServerUser user = new ServerUser()
             {
                 ID = nextID,
                 Name = name,
                 operationContext = OperationContext.Current
             };
+            //Добавляем нового игрока в рейтинг для подсчета очков
+            Container.Top.Add(nextID, 0);
             nextID++;
-
-            if (users.Count < 5)
+            if (users.Count < 4)
             {
                 SendMsg(" К игре подключился " + user.Name + ". Для начала игры не хватает " + (4 - users.Count) + " игроков.", 0);
                 Console.WriteLine(" К игре подключился " + user.Name);
 
             }
-            else if (users.Count == 5)
+            else if (users.Count == 4)
             {
                 SendMsg(" К игре подключился " + user.Name + ". Все игроки собраны. Игра скоро начнется.", 0);
                 Console.WriteLine(" К игре подключился " + user.Name + ". Все игроки собраны.");
                 Console.WriteLine("Игра началась.");
-
-            }
-            else
-            {
-
             }
             users.Add(user);
             mas[0] = user.ID;
             mas[1] = users.Count;
+
             return mas;
         }
         /// <summary>
@@ -174,11 +226,10 @@ namespace WcfHosting
         /// Отправляет карту игрокам
         /// </summary>
         /// <returns></returns>
-        public int ReturnNameImage()
+        public string ReturnNameImage()
         {
-
             Random rnd = new Random();
-            int index = rnd.Next(1, Container.nameImage.Count - 1);
+            int index = rnd.Next(Container.nameImage.Count - 1);
 
             while (Container.nameImagePast.Contains(Container.nameImage[index]))
             {
@@ -186,7 +237,7 @@ namespace WcfHosting
                 index = rnd.Next(Container.nameImage.Count - 1);
             }
             Container.nameImagePast.Add(Container.nameImage[index]);
-            return Container.nameImage[index];
+            return Container.nameImage[index].ToString();
         }
         /// <summary>
         /// Отправляет сообщение пользователям во время ожидания выбора ведущего
@@ -196,6 +247,7 @@ namespace WcfHosting
         public string[] SendInstruct(int ID)
         {
             string[] str = new string[2];
+            Container.Top.Clear();
 
             if (ID == Container.nextPlayer)
             {
@@ -204,12 +256,83 @@ namespace WcfHosting
             }
             else
             {
-                str[0] = "Ведущий выбирает карту.";
+                str[0] = $"Ведущий выбирает карту. Ведущий: {users.FirstOrDefault(x => x.ID == Container.nextPlayer).Name}";
                 str[1] = Container.nextPlayer.ToString();
             }
             return str;
         }
-
+        /// <summary>
+        /// Добавляем в список карту, выбранную игроком, которую он считает, что загадал ведущий
+        /// </summary>
+        /// <param name="nameImage"></param>
+        /// <param name="ID"></param>
+        public void AddAnswer(string nameImage, int ID)
+        {
+            int number = 0;
+            int.TryParse(string.Join("", nameImage.Where(c => char.IsDigit(c))), out number);
+            Container.ChoicePlayers.Add(ID, number);
+        }
+        /// <summary>
+        /// Проверяем все ли игроки выбрали карту
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckCountAnswerPlayer()
+        {
+            if (Container.ChoicePlayers.Count == 4)
+            {
+                return true;
+            }
+            return false;
+        }
+        /// <summary>
+        /// Подсчет очков
+        /// </summary>
+        /// <param name="nameImage"></param>
+        /// <param name="ID"></param>
+        public Dictionary<int, int> ScoringPoints()
+        {
+            int count = 0;
+            foreach (var item in Container.ChoicePlayers)
+            {
+                if (item.Value == Container.nameImageRound.FirstOrDefault(x => x.Key == Container.nextPlayer).Value)
+                {
+                    Container.Top[item.Key] += 1;
+                    Container.Top[Container.nextPlayer] += 1;
+                    count++;
+                }
+                else if (Container.nameImageRound.Values.Contains(item.Value))
+                {
+                    //Добавляем очко игроку, карту которого угадали
+                    Container.Top[Container.nameImageRound.FirstOrDefault(x => x.Value == item.Value).Key] += 1;
+                }
+            }
+            if (count == 4)
+            {
+                // отнимаем у ведущего все баллы которые он получил от игроков + 3 балла
+                Container.Top[Container.nextPlayer] -= 7;
+            }
+            else
+            {
+                foreach (var item in Container.ChoicePlayers)
+                {
+                    if (item.Value == Container.nameImageRound.FirstOrDefault(x => x.Key == Container.nextPlayer).Value)
+                    {
+                        Container.Top[item.Key] += 2;
+                    }
+                }
+                Container.Top[Container.nextPlayer] += 3;
+            }
+            return Container.Top;
+        }
+        public Dictionary<string, int> ReturnCardAndName()
+        {
+            Dictionary<string, int> CardAndName = new Dictionary<string, int>();
+            foreach (var item in Container.nameImageRound)
+            {
+                CardAndName.Add(users.FirstOrDefault(x => x.ID == item.Key).Name, item.Value);
+            }
+            return CardAndName;
+        }
         public void SendMsg(string msg, int id)
         {
             foreach (var item in users)

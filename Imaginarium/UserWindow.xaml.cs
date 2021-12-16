@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -74,16 +75,12 @@ namespace Imaginarium
             InitializeComponent();
 
         }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //getmsg = new getMsg(this);
-            // client = new ServiceGameClient(new System.ServiceModel.InstanceContext(this));
-            // client.Open();
             List<int> nameImg = new List<int>();
             for (int i = 0; i < 5; i++)
             {
-                nameImg.Add(client.ReturnNameImage());
+                nameImg.Add(Convert.ToInt32(client.ReturnNameImage()));
             }
             Img1.Source = new BitmapImage(new Uri("Images/" + nameImg[0] + ".jpg", UriKind.Relative));
             Img2.Source = new BitmapImage(new Uri("Images/" + nameImg[1] + ".jpg", UriKind.Relative));
@@ -114,12 +111,12 @@ namespace Imaginarium
                     switch (result)
                     {
                         case MessageBoxResult.Yes:
-                            //отправляем ассоциацию на сервер
-                            client.SendMsg(association, ID);
                             Image image = (Image)sender;
                             //отправляем выбранную картинку на сервер
                             client.AddImageInRound(ID, image.Source.ToString());
                             image.Source = new BitmapImage(new Uri("Images/" + client.ReturnNameImage() + ".jpg", UriKind.Relative));
+                            //отправляем ассоциацию на сервер
+                            client.SendMsg(association, ID);
                             tbInstruct.Text = $"Игроки выбирают карту, которая соответствует Вашей ассоциации - {association}";
                             break;
                         case MessageBoxResult.No:
@@ -139,10 +136,12 @@ namespace Imaginarium
                     case MessageBoxResult.Yes:
                         Image image = (Image)sender;
                         //отправляем выбранную картинку на сервер
-                        client.AddImageInRound(ID, image.Source.ToString());
+                        Image imageTest = new Image() { Source = image.Source };
                         image.Source = new BitmapImage(new Uri("Images/" + client.ReturnNameImage() + ".jpg", UriKind.Relative));
+                        client.AddImageInRound(ID, imageTest.Source.ToString());
                         tbInstruct.Text = "Другие игроки еще выбирают карту, ожидайте";
                         signal = false;
+                        //image.Source = new BitmapImage(new Uri("Images/" + client.ReturnNameImage() + ".jpg", UriKind.Relative));
                         break;
                     case MessageBoxResult.No:
                         break;
@@ -188,5 +187,54 @@ namespace Imaginarium
             Img55.Source = new BitmapImage(new Uri("Images/" + arrayImages[4] + ".jpg", UriKind.Relative));
         }
 
+        private void Img11_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Отправляем карту?", "Имаджинариум", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    Image image = (Image)sender;
+                    string nameImage = image.Source.ToString();
+                    client.AddAnswer(nameImage, ID);
+                    Dictionary<string, int> CardAndName = client.ReturnCardAndName();
+                    
+                    foreach (var item in CardAndName)
+                    {
+                        var source = new BitmapImage(new Uri("pack://application:,,,/Imaginarium;component/Images/" + item.Value + ".jpg", UriKind.Absolute));
+                        if (Img11.Source.ToString() == source.ToString())
+                        {
+                            tb1.Text = item.Key;
+                        }
+                        else if(Img22.Source.ToString() == source.ToString())
+                        { 
+                            tb2.Text = item.Key;
+                        }
+                        else if (Img33.Source.ToString() == source.ToString())
+                        {
+                            tb3.Text = item.Key;
+                        }
+                        else if (Img44.Source.ToString() == source.ToString())
+                        {
+                            tb4.Text = item.Key;
+                        }
+                        else if (Img55.Source.ToString() == source.ToString())
+                        {
+                            tb5.Text = item.Key;
+                        }
+                    }
+                    while (true)
+                    {
+                        if (client.CheckCountAnswerPlayer())
+                        {
+                            break;
+                        }
+                    }
+                    client.ScoringPoints();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+
+        }
     }
 }

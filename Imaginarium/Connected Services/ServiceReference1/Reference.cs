@@ -34,10 +34,10 @@ namespace Imaginarium.ServiceReference1 {
         System.Threading.Tasks.Task SendMsgAsync(string msg, int id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnNameImage", ReplyAction="http://tempuri.org/IServiceGame/ReturnNameImageResponse")]
-        int ReturnNameImage();
+        string ReturnNameImage();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnNameImage", ReplyAction="http://tempuri.org/IServiceGame/ReturnNameImageResponse")]
-        System.Threading.Tasks.Task<int> ReturnNameImageAsync();
+        System.Threading.Tasks.Task<string> ReturnNameImageAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/SendInstruct", ReplyAction="http://tempuri.org/IServiceGame/SendInstructResponse")]
         string[] SendInstruct(int ID);
@@ -50,6 +50,30 @@ namespace Imaginarium.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IServiceGame/AddImageInRound")]
         System.Threading.Tasks.Task AddImageInRoundAsync(int ID, string nameImage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ScoringPoints", ReplyAction="http://tempuri.org/IServiceGame/ScoringPointsResponse")]
+        System.Collections.Generic.Dictionary<int, int> ScoringPoints();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ScoringPoints", ReplyAction="http://tempuri.org/IServiceGame/ScoringPointsResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<int, int>> ScoringPointsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/AddAnswer", ReplyAction="http://tempuri.org/IServiceGame/AddAnswerResponse")]
+        void AddAnswer(string nameImage, int ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/AddAnswer", ReplyAction="http://tempuri.org/IServiceGame/AddAnswerResponse")]
+        System.Threading.Tasks.Task AddAnswerAsync(string nameImage, int ID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/CheckCountAnswerPlayer", ReplyAction="http://tempuri.org/IServiceGame/CheckCountAnswerPlayerResponse")]
+        bool CheckCountAnswerPlayer();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/CheckCountAnswerPlayer", ReplyAction="http://tempuri.org/IServiceGame/CheckCountAnswerPlayerResponse")]
+        System.Threading.Tasks.Task<bool> CheckCountAnswerPlayerAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnCardAndName", ReplyAction="http://tempuri.org/IServiceGame/ReturnCardAndNameResponse")]
+        System.Collections.Generic.Dictionary<string, int> ReturnCardAndName();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnCardAndName", ReplyAction="http://tempuri.org/IServiceGame/ReturnCardAndNameResponse")]
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, int>> ReturnCardAndNameAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -111,11 +135,11 @@ namespace Imaginarium.ServiceReference1 {
             return base.Channel.SendMsgAsync(msg, id);
         }
         
-        public int ReturnNameImage() {
+        public string ReturnNameImage() {
             return base.Channel.ReturnNameImage();
         }
         
-        public System.Threading.Tasks.Task<int> ReturnNameImageAsync() {
+        public System.Threading.Tasks.Task<string> ReturnNameImageAsync() {
             return base.Channel.ReturnNameImageAsync();
         }
         
@@ -133,6 +157,38 @@ namespace Imaginarium.ServiceReference1 {
         
         public System.Threading.Tasks.Task AddImageInRoundAsync(int ID, string nameImage) {
             return base.Channel.AddImageInRoundAsync(ID, nameImage);
+        }
+        
+        public System.Collections.Generic.Dictionary<int, int> ScoringPoints() {
+            return base.Channel.ScoringPoints();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<int, int>> ScoringPointsAsync() {
+            return base.Channel.ScoringPointsAsync();
+        }
+        
+        public void AddAnswer(string nameImage, int ID) {
+            base.Channel.AddAnswer(nameImage, ID);
+        }
+        
+        public System.Threading.Tasks.Task AddAnswerAsync(string nameImage, int ID) {
+            return base.Channel.AddAnswerAsync(nameImage, ID);
+        }
+        
+        public bool CheckCountAnswerPlayer() {
+            return base.Channel.CheckCountAnswerPlayer();
+        }
+        
+        public System.Threading.Tasks.Task<bool> CheckCountAnswerPlayerAsync() {
+            return base.Channel.CheckCountAnswerPlayerAsync();
+        }
+        
+        public System.Collections.Generic.Dictionary<string, int> ReturnCardAndName() {
+            return base.Channel.ReturnCardAndName();
+        }
+        
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, int>> ReturnCardAndNameAsync() {
+            return base.Channel.ReturnCardAndNameAsync();
         }
     }
 }

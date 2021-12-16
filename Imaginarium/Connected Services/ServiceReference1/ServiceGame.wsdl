@@ -66,6 +66,30 @@
   <wsdl:message name="IServiceGame_AddImageInRound_InputMessage">
     <wsdl:part name="parameters" element="tns:AddImageInRound" />
   </wsdl:message>
+  <wsdl:message name="IServiceGame_ScoringPoints_InputMessage">
+    <wsdl:part name="parameters" element="tns:ScoringPoints" />
+  </wsdl:message>
+  <wsdl:message name="IServiceGame_ScoringPoints_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ScoringPointsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceGame_AddAnswer_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddAnswer" />
+  </wsdl:message>
+  <wsdl:message name="IServiceGame_AddAnswer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddAnswerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceGame_CheckCountAnswerPlayer_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCountAnswerPlayer" />
+  </wsdl:message>
+  <wsdl:message name="IServiceGame_CheckCountAnswerPlayer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCountAnswerPlayerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceGame_ReturnCardAndName_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnCardAndName" />
+  </wsdl:message>
+  <wsdl:message name="IServiceGame_ReturnCardAndName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReturnCardAndNameResponse" />
+  </wsdl:message>
   <wsdl:message name="IServiceGame_MsgCallback_OutputCallbackMessage">
     <wsdl:part name="parameters" element="tns:MsgCallback" />
   </wsdl:message>
@@ -91,6 +115,22 @@
     </wsdl:operation>
     <wsdl:operation name="AddImageInRound">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/AddImageInRound" message="tns:IServiceGame_AddImageInRound_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ScoringPoints">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/ScoringPoints" message="tns:IServiceGame_ScoringPoints_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceGame/ScoringPointsResponse" message="tns:IServiceGame_ScoringPoints_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddAnswer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/AddAnswer" message="tns:IServiceGame_AddAnswer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceGame/AddAnswerResponse" message="tns:IServiceGame_AddAnswer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckCountAnswerPlayer">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/CheckCountAnswerPlayer" message="tns:IServiceGame_CheckCountAnswerPlayer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceGame/CheckCountAnswerPlayerResponse" message="tns:IServiceGame_CheckCountAnswerPlayer_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReturnCardAndName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceGame/ReturnCardAndName" message="tns:IServiceGame_ReturnCardAndName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceGame/ReturnCardAndNameResponse" message="tns:IServiceGame_ReturnCardAndName_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="MsgCallback">
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceGame/MsgCallback" message="tns:IServiceGame_MsgCallback_OutputCallbackMessage" />
@@ -146,6 +186,42 @@
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="ScoringPoints">
+      <soap12:operation soapAction="http://tempuri.org/IServiceGame/ScoringPoints" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddAnswer">
+      <soap12:operation soapAction="http://tempuri.org/IServiceGame/AddAnswer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckCountAnswerPlayer">
+      <soap12:operation soapAction="http://tempuri.org/IServiceGame/CheckCountAnswerPlayer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReturnCardAndName">
+      <soap12:operation soapAction="http://tempuri.org/IServiceGame/ReturnCardAndName" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="MsgCallback">
       <soap12:operation soapAction="http://tempuri.org/IServiceGame/MsgCallback" style="document" />
