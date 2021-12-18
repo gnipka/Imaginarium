@@ -25,7 +25,7 @@ namespace Imaginarium
             InitializeComponent();
             TextBox textBox = new TextBox();
             int i = 1;
-            foreach (var item in scoring)
+            foreach (var item in  scoring)
             {
                 textBox.Name = "tb" + i + 0;
                 textBox.Text = item.Key.ToString();

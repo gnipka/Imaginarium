@@ -56,15 +56,21 @@ namespace WcfHosting
         /// Подсчет очков, добавление их в список (Top)
         /// </summary>
         /// <returns></returns>
-        [OperationContract]
-        Dictionary<int, int> ScoringPoints();
-        /// <summary>
-        /// Добавление карты, которую игрок считает картой ведущего, в список (ChoicePlayers)
-        /// </summary>
-        /// <param name="nameImage"></param>
-        /// <param name="ID"></param>
-        [OperationContract]
+        //[OperationContract]
+        //void ScoringPoints();
+        ///// <summary>
+        ///// Добавление карты, которую игрок считает картой ведущего, в список (ChoicePlayers)
+        ///// </summary>
+        ///// <param name="nameImage"></param>
+        ///// <param name="ID"></param>
+        [OperationContract(IsOneWay = true)]
         void AddAnswer(string nameImage, int ID);
+        /// <summary>
+        /// Отправка игрокам подсчитанных очков
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        Dictionary<int, int> ReturnPoints();
         /// <summary>
         /// Возвращает имя игрока и номер карты, чтобы отобразить после окончания раунда
         /// </summary>
@@ -275,10 +281,8 @@ namespace WcfHosting
             if(Container.ChoicePlayers.Count == Container.CountPlayers - 1)
             {
                 string answer = "Ready";
-                foreach (var item in users)
-                {
-                    item.operationContext.GetCallbackChannel<IServerGameCallback>().MsgCallback(answer);
-                }
+                ScoringPoints();
+                SendMsg(answer, ID);
             }
         }
         /// <summary>
@@ -286,7 +290,7 @@ namespace WcfHosting
         /// </summary>
         /// <param name="nameImage"></param>
         /// <param name="ID"></param>
-        public Dictionary<int, int> ScoringPoints()
+        void ScoringPoints()
         {
             int count = 0;
             foreach (var item in Container.ChoicePlayers)
@@ -320,6 +324,10 @@ namespace WcfHosting
                 Top[Container.nextPlayer] += 3;
             }
             Top = Top.OrderBy(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
+
+        public Dictionary<int, int> ReturnPoints()
+        {
             return Top;
         }
         public Dictionary<string, int> ReturnCardAndName()
