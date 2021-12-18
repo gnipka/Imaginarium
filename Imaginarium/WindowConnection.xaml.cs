@@ -65,6 +65,7 @@ namespace Imaginarium
                 userWindow.name = name;
                 userWindow.ID = mas[0];
                 userWindow.client = client;
+                this.Visibility = Visibility.Hidden;
                 userWindow.Show();
             }
         }

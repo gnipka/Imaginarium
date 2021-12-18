@@ -81,7 +81,8 @@ namespace Imaginarium
             List<int> nameImg = new List<int>();
             for (int i = 0; i < 5; i++)
             {
-                nameImg.Add(Convert.ToInt32(client.ReturnNameImage()));
+                string name = client.ReturnNameImage();
+                nameImg.Add(Convert.ToInt32(name));
             }
             Img1.Source = new BitmapImage(new Uri("Images/" + nameImg[0] + ".jpg", UriKind.Relative));
             Img2.Source = new BitmapImage(new Uri("Images/" + nameImg[1] + ".jpg", UriKind.Relative));
@@ -176,7 +177,7 @@ namespace Imaginarium
 
         public void ReturnImage(string images)
         {
-            if(ID == leaderID)
+            if (ID == leaderID)
             {
                 tbInstruct.Text = "Игроки угадывают Вашу карту";
             }
@@ -211,7 +212,7 @@ namespace Imaginarium
                         {
                             tb1.Text = item.Key;
                         }
-                        else if(Img22.Source.ToString() == source.ToString())
+                        else if (Img22.Source.ToString() == source.ToString())
                         {
                             tb2.Text = item.Key;
                         }

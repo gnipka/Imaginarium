@@ -85,7 +85,7 @@
   <xs:element name="ReturnPointsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReturnPointsResult" nillable="true" type="q3:ArrayOfKeyValueOfintint" />
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReturnPointsResult" nillable="true" type="q3:ArrayOfKeyValueOfstringint" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

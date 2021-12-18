@@ -58,10 +58,10 @@ namespace Imaginarium.ServiceReference1 {
         System.Threading.Tasks.Task AddAnswerAsync(string nameImage, int ID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnPoints", ReplyAction="http://tempuri.org/IServiceGame/ReturnPointsResponse")]
-        System.Collections.Generic.Dictionary<int, int> ReturnPoints();
+        System.Collections.Generic.Dictionary<string, int> ReturnPoints();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnPoints", ReplyAction="http://tempuri.org/IServiceGame/ReturnPointsResponse")]
-        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<int, int>> ReturnPointsAsync();
+        System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, int>> ReturnPointsAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceGame/ReturnCardAndName", ReplyAction="http://tempuri.org/IServiceGame/ReturnCardAndNameResponse")]
         System.Collections.Generic.Dictionary<string, int> ReturnCardAndName();
@@ -161,11 +161,11 @@ namespace Imaginarium.ServiceReference1 {
             return base.Channel.AddAnswerAsync(nameImage, ID);
         }
         
-        public System.Collections.Generic.Dictionary<int, int> ReturnPoints() {
+        public System.Collections.Generic.Dictionary<string, int> ReturnPoints() {
             return base.Channel.ReturnPoints();
         }
         
-        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<int, int>> ReturnPointsAsync() {
+        public System.Threading.Tasks.Task<System.Collections.Generic.Dictionary<string, int>> ReturnPointsAsync() {
             return base.Channel.ReturnPointsAsync();
         }
         

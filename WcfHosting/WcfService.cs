@@ -70,7 +70,7 @@ namespace WcfHosting
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        Dictionary<int, int> ReturnPoints();
+        Dictionary<string, int> ReturnPoints();
         /// <summary>
         /// Возвращает имя игрока и номер карты, чтобы отобразить после окончания раунда
         /// </summary>
@@ -326,9 +326,14 @@ namespace WcfHosting
             Top = Top.OrderBy(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
-        public Dictionary<int, int> ReturnPoints()
+        public Dictionary<string, int> ReturnPoints()
         {
-            return Top;
+            Dictionary<string, int> dict = new Dictionary<string, int>();
+            foreach (var item in Top)
+            {
+                dict.Add(users.FirstOrDefault(x => x.ID == item.Key).Name, item.Value);
+            }
+            return dict;
         }
 
         public Dictionary<string, int> ReturnCardAndName()
