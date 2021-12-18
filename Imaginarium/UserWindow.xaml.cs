@@ -170,9 +170,7 @@ namespace Imaginarium
         }
         public void ReturnScoringPlayers()
         {
-            scoring = client.ReturnPoints();
-            TopPlayers topPlayers = new TopPlayers();
-            topPlayers.scoring = scoring;
+            TopPlayers topPlayers = new TopPlayers(client.ReturnPoints());
             topPlayers.Show();
         }
 

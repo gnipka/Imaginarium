@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f808aa90-e690-4526-ad31-523b709c8ca3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="f808aa90-e690-4526-ad31-523b709c8ca3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -25,8 +25,8 @@
     <MetadataFile FileName="item.disco" MetadataType="Disco" ID="66763b50-ed3c-4be2-b35a-6bc4a6b72689" SourceId="1" SourceUrl="http://localhost:8301/?disco" />
     <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="24a859d6-a7ce-4c4d-9462-dca64ede7c77" SourceId="1" SourceUrl="http://localhost:8301/?xsd=xsd0" />
     <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="379139c1-e9dd-442e-b859-5e6b247ba5e5" SourceId="1" SourceUrl="http://localhost:8301/?xsd=xsd2" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="01dc96fd-549a-48d5-9aca-3d9e27215c92" SourceId="1" SourceUrl="http://localhost:8301/?xsd=xsd1" />
     <MetadataFile FileName="ServiceGame.wsdl" MetadataType="Wsdl" ID="ec6018cc-0877-4fc4-9826-ea0fd559f620" SourceId="1" SourceUrl="http://localhost:8301/?wsdl" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="01dc96fd-549a-48d5-9aca-3d9e27215c92" SourceId="1" SourceUrl="http://localhost:8301/?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

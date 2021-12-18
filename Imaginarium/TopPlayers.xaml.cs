@@ -19,19 +19,25 @@ namespace Imaginarium
     /// </summary>
     public partial class TopPlayers : Window
     {
-        public Dictionary<int, int> scoring { get; set; }
-        public TopPlayers()
+        Dictionary<int, int> _scoring;
+        public TopPlayers(Dictionary<int, int> scoring)
         {
             InitializeComponent();
+            _scoring = scoring;
+
             TextBox textBox = new TextBox();
             int i = 1;
-            foreach (var item in  scoring)
-            {
-                textBox.Name = "tb" + i + 0;
-                textBox.Text = item.Key.ToString();
-                textBox.Name = "tb" + i + 1;
-                textBox.Text = item.Value.ToString();
-            }
+
+            foreach (var item in _scoring)
+            {               
+                //((TextBox)textBox.FindName("tb" + i.ToString() + 0.ToString())).Text = item.Key.ToString();
+                //((TextBox)textBox.FindName("tb" + i.ToString() + 1.ToString())).Text = item.Value.ToString();
+
+                tb10.Text = item.Key.ToString();
+                tb11.Text = item.Value.ToString();
+                
+                i++;
+            }            
         }
     }
 }
