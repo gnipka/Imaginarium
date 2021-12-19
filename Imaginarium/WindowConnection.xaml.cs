@@ -66,6 +66,7 @@ namespace Imaginarium
                 userWindow.ID = mas[0];
                 userWindow.client = client;
                 this.Visibility = Visibility.Hidden;
+                this.ShowInTaskbar = false;
                 userWindow.Show();
             }
         }
@@ -82,6 +83,10 @@ namespace Imaginarium
                 if(msg == "Ready")
                 {
                     userWindow.ReturnScoringPlayers();
+                }
+                else if(msg == "End")
+                {
+
                 }
                 else if (signal)
                 {

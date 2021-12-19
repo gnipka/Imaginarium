@@ -69,6 +69,14 @@ namespace Imaginarium
         /// Маячок, чтобы игроки после получения ассоциации могли выбрать картинку
         /// </summary>
         public bool signal { get; set; }
+        /// <summary>
+        /// Маячок, для действий ведущего
+        /// </summary>
+        public bool signalLeader { get; set; }
+        /// <summary>
+        /// Маячок выбора карты ведущего
+        /// </summary>
+        public bool signalRound { get; set; }
         public Dictionary<int, int> scoring;
 
         public UserWindow()
@@ -94,6 +102,9 @@ namespace Imaginarium
             str = client.SendInstruct(ID);
             instruct = str[0];
             tbInstruct.Text = instruct;
+            signal = false;
+            signalLeader = true;
+            signalRound = true;
             leaderID = Convert.ToInt32(str[1]);
         }
         public void GetMsg(string msg)
@@ -106,7 +117,7 @@ namespace Imaginarium
             if (ID == leaderID)
             {
 
-                if (tbInstruct.Text != null && tbInstruct.Text != instruct)
+                if (tbInstruct.Text != null && tbInstruct.Text != instruct && signalLeader == true)
                 {
                     association = tbInstruct.Text;
                     MessageBoxResult result = MessageBox.Show("Отправляем вашу ассоциацию игрокам?", "Имаджинариум", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
@@ -120,6 +131,7 @@ namespace Imaginarium
                             //отправляем ассоциацию на сервер
                             client.SendMsg(association, ID);
                             tbInstruct.Text = $"Игроки выбирают карту, которая соответствует Вашей ассоциации - {association}";
+                            signalLeader = false;
                             break;
                         case MessageBoxResult.No:
                             break;
@@ -132,21 +144,36 @@ namespace Imaginarium
             }
             else
             {
-                MessageBoxResult result = MessageBox.Show("Отправляем карту?", "Имаджинариум", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-                switch (result)
+                if (signal)
                 {
-                    case MessageBoxResult.Yes:
-                        Image image = (Image)sender;
-                        //отправляем выбранную картинку на сервер
-                        Image imageTest = new Image() { Source = image.Source };
-                        image.Source = new BitmapImage(new Uri("Images/" + client.ReturnNameImage() + ".jpg", UriKind.Relative));
-                        client.AddImageInRound(ID, imageTest.Source.ToString());
-                        tbInstruct.Text = "Другие игроки еще выбирают карту, ожидайте";
-                        signal = false;
-                        //image.Source = new BitmapImage(new Uri("Images/" + client.ReturnNameImage() + ".jpg", UriKind.Relative));
-                        break;
-                    case MessageBoxResult.No:
-                        break;
+                    MessageBoxResult result = MessageBox.Show("Отправляем карту?", "Имаджинариум", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+                    switch (result)
+                    {
+                        case MessageBoxResult.Yes:
+                            Image image = (Image)sender;
+                            //отправляем выбранную картинку на сервер
+                            Image imageTest = new Image() { Source = image.Source };
+                            string str = client.ReturnNameImage();
+                            //Если пришла картинка с именем null, значит закончились все использованные картинки,тогда игра зканчивается
+                            if (str != null)
+                            {
+                                image.Source = new BitmapImage(new Uri("Images/" + str + ".jpg", UriKind.Relative));
+                                client.AddImageInRound(ID, imageTest.Source.ToString());
+                                tbInstruct.Text = "Другие игроки еще выбирают карту, ожидайте";
+                                signal = false;
+                            }
+                            else
+                            {
+                                image.Source = null;
+                                client.AddImageInRound(ID, imageTest.Source.ToString());
+                                tbInstruct.Text = "Карты закончились. Это последний раунд. Другие игроки еще выбирают карту, ожидайте";
+                                signal = false;
+                            }
+                            //image.Source = new BitmapImage(new Uri("Images/" + client.ReturnNameImage() + ".jpg", UriKind.Relative));
+                            break;
+                        case MessageBoxResult.No:
+                            break;
+                    }
                 }
             }
         }
@@ -168,11 +195,38 @@ namespace Imaginarium
             {
                 tbInstruct.Text = msg;
             }
+            signal = true;
         }
         public void ReturnScoringPlayers()
         {
+
             TopPlayers topPlayers = new TopPlayers(client.ReturnPoints());
+            TopPlayers.signal = false;
             topPlayers.Show();
+            string[] str = new string[2];
+            str = client.SendInstruct(ID);
+            instruct = str[0];
+            tbInstruct.Text = instruct;
+            leaderID = Convert.ToInt32(str[1]);
+            signalLeader = true;
+            signalRound = true;
+            Img11.Source = null;
+            Img22.Source = null;
+            Img33.Source = null;
+            Img44.Source = null;
+            Img55.Source = null;
+            tb1.Text = null;
+            tb2.Text = null;
+            tb3.Text = null;
+            tb4.Text = null;
+            tb5.Text = null;
+        }
+        public void EndGame()
+        {
+            TopPlayers topPlayers = new TopPlayers(client.ReturnPoints());
+            TopPlayers.signal = true;
+            topPlayers.Show();
+            this.Hide();
         }
 
         public void ReturnImage(string images)
@@ -196,45 +250,48 @@ namespace Imaginarium
 
         private void Img11_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBoxResult result = MessageBox.Show("Отправляем карту?", "Имаджинариум", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-            switch (result)
+            if (ID != leaderID && signalRound == true)
             {
-                case MessageBoxResult.Yes:
-                    Image image = (Image)sender;
-                    string nameImage = image.Source.ToString();
-                    client.AddAnswer(nameImage, ID);
-                    Dictionary<string, int> CardAndName = client.ReturnCardAndName();
+                MessageBoxResult result = MessageBox.Show("Отправляем карту?", "Имаджинариум", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        Image image = (Image)sender;
+                        string nameImage = image.Source.ToString();
+                        client.AddAnswer(nameImage, ID);
+                        Dictionary<string, int> CardAndName = client.ReturnCardAndName();
 
-                    foreach (var item in CardAndName)
-                    {
-                        var source = new BitmapImage(new Uri("pack://application:,,,/Imaginarium;component/Images/" + item.Value + ".jpg", UriKind.Absolute));
-                        if (Img11.Source.ToString() == source.ToString())
+                        foreach (var item in CardAndName)
                         {
-                            tb1.Text = item.Key;
+                            var source = new BitmapImage(new Uri("pack://application:,,,/Imaginarium;component/Images/" + item.Value + ".jpg", UriKind.Absolute));
+                            if (Img11.Source.ToString() == source.ToString())
+                            {
+                                tb1.Text = item.Key;
+                            }
+                            else if (Img22.Source.ToString() == source.ToString())
+                            {
+                                tb2.Text = item.Key;
+                            }
+                            else if (Img33.Source.ToString() == source.ToString())
+                            {
+                                tb3.Text = item.Key;
+                            }
+                            else if (Img44.Source.ToString() == source.ToString())
+                            {
+                                tb4.Text = item.Key;
+                            }
+                            else if (Img55.Source.ToString() == source.ToString())
+                            {
+                                tb5.Text = item.Key;
+                            }
                         }
-                        else if (Img22.Source.ToString() == source.ToString())
-                        {
-                            tb2.Text = item.Key;
-                        }
-                        else if (Img33.Source.ToString() == source.ToString())
-                        {
-                            tb3.Text = item.Key;
-                        }
-                        else if (Img44.Source.ToString() == source.ToString())
-                        {
-                            tb4.Text = item.Key;
-                        }
-                        else if (Img55.Source.ToString() == source.ToString())
-                        {
-                            tb5.Text = item.Key;
-                        }
-                    }
-                    tbInstruct.Text = "Ваш ответ отправлен. Ожидайте пока все участники выберут карту.";
-                    break;
-                case MessageBoxResult.No:
-                    break;
+                        tbInstruct.Text = "Ваш ответ отправлен. Ожидайте пока все участники выберут карту.";
+                        signalRound = false;
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
             }
-
         }
     }
 }

@@ -20,7 +20,7 @@
             <RowDefinition Height="261*"/>
 
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="Рейтинг участников" VerticalAlignment="Center" FontSize="50" Foreground="#EDE7F6" FontWeight="DemiBold" Height="60" Margin="63,26,10.333,10.667" Width="500"/>
+        <TextBlock x:Name="tbName" Grid.Row="0" HorizontalAlignment="Center" Text="Рейтинг участников" VerticalAlignment="Center" FontSize="50" Foreground="#EDE7F6" FontWeight="DemiBold" Height="60" Margin="63,26,10.333,10.667" Width="500"/>
         <Grid x:Name="grid" Margin="0, 10, 0, 10 " Grid.Row="1" Background="White" ShowGridLines="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -34,18 +34,18 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBox x:Name="tb00" Grid.Row="0" Grid.Column="0"/>
-            <TextBox x:Name="tb01" Grid.Row="0" Grid.Column="1"/>
-            <TextBox x:Name="tb11" Grid.Row="1" Grid.Column="1"/>
-            <TextBox x:Name="tb10" Grid.Row="1" Grid.Column="0"/>
-            <TextBox x:Name="tb20" Grid.Row="2" Grid.Column="0"/>
-            <TextBox x:Name="tb21" Grid.Row="2" Grid.Column="1"/>
-            <TextBox x:Name="tb30"  Grid.Row="3" Grid.Column="0"/>
-            <TextBox x:Name="tb31"  Grid.Row="3" Grid.Column="1"/>
-            <TextBox x:Name="tb40"  Grid.Row="4" Grid.Column="0"/>
-            <TextBox x:Name="tb41"  Grid.Row="4" Grid.Column="1"/>
-            <TextBox x:Name="tb50"  Grid.Row="5" Grid.Column="0"/>
-            <TextBox x:Name="tb51"  Grid.Row="5" Grid.Column="1"/>
+            <TextBox x:Name="tb00" Grid.Row="0" FontSize="25" Grid.Column="0"/>
+            <TextBox x:Name="tb01" Grid.Row="0" FontSize="25" Grid.Column="1"/>
+            <TextBox x:Name="tb11" Grid.Row="1" Foreground="#B118FF" FontWeight="DemiBold" FontSize="25" Grid.Column="1"/>
+            <TextBox x:Name="tb10" Grid.Row="1" Foreground="#B118FF" FontWeight="DemiBold" FontSize="25" Grid.Column="0"/>
+            <TextBox x:Name="tb20" Grid.Row="2" FontSize="25" Grid.Column="0"/>
+            <TextBox x:Name="tb21" Grid.Row="2" FontSize="25" Grid.Column="1"/>
+            <TextBox x:Name="tb30"  Grid.Row="3" FontSize="25" Grid.Column="0"/>
+            <TextBox x:Name="tb31"  Grid.Row="3" FontSize="25" Grid.Column="1"/>
+            <TextBox x:Name="tb40"  Grid.Row="4" FontSize="25" Grid.Column="0"/>
+            <TextBox x:Name="tb41"  Grid.Row="4" FontSize="25" Grid.Column="1"/>
+            <TextBox x:Name="tb50"  Grid.Row="5" FontSize="25" Grid.Column="0"/>
+            <TextBox x:Name="tb51"  Grid.Row="5" FontSize="25" Grid.Column="1"/>
         </Grid>
     </Grid>
 </Window>

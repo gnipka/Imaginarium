@@ -238,14 +238,20 @@ namespace WcfHosting
         {
             Random rnd = new Random();
             int index = rnd.Next(0, Container.nameImage.Count - 1);
-
-            while (Container.nameImagePast.Contains(Container.nameImage[index]))
+            if (Container.nameImagePast.Count != Container.nameImage.Count)
             {
-                rnd = new Random();
-                index = rnd.Next(Container.nameImage.Count - 1);
+                while (Container.nameImagePast.Contains(Container.nameImage[index]))
+                {
+                    rnd = new Random();
+                    index = rnd.Next(Container.nameImage.Count - 1);
+                }
+                Container.nameImagePast.Add(Container.nameImage[index]);
+                return Container.nameImage[index].ToString();
             }
-            Container.nameImagePast.Add(Container.nameImage[index]);
-            return Container.nameImage[index].ToString();
+            else
+            {
+                return null;
+            }
         }
         /// <summary>
         /// Отправляет сообщение пользователям во время ожидания выбора ведущего
@@ -280,7 +286,16 @@ namespace WcfHosting
             Container.ChoicePlayers.Add(ID, number);
             if(Container.ChoicePlayers.Count == Container.CountPlayers - 1)
             {
-                string answer = "Ready";
+                Container.nextPlayer += 1;
+                string answer = string.Empty;
+                if (Container.nameImage.Count == Container.nameImagePast.Count)
+                {
+                    answer = "End";
+                }
+                else
+                {
+                    answer = "Ready";
+                }
                 ScoringPoints();
                 SendMsg(answer, ID);
             }
@@ -333,6 +348,9 @@ namespace WcfHosting
             {
                 dict.Add(users.FirstOrDefault(x => x.ID == item.Key).Name, item.Value);
             }
+            Container.nameImageRound.Clear();
+            Container.ChoicePlayers.Clear();
+            Container.rnd.Clear();
             return dict;
         }
 

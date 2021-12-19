@@ -20,9 +20,14 @@ namespace Imaginarium
     public partial class TopPlayers : Window
     {
         Dictionary<string, int> _scoring;
+        public static bool signal { get; set; }
         public TopPlayers(Dictionary<string, int> scoring)
         {
             InitializeComponent();
+            if (signal)
+            {
+                tbName.Text = "Игра окончена";
+            }
             _scoring = scoring;
             var textBox1Name = (TextBox)this.FindName($"tb00");
             var textBox2Name = (TextBox)this.FindName($"tb01");
