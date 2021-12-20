@@ -228,6 +228,7 @@ namespace WcfHosting
             if (user != null)
             {
                 users.Remove(user);
+                Console.WriteLine($"Пользователь {user.Name} отключился от игры") ;
             }
         }
         /// <summary>
@@ -237,13 +238,13 @@ namespace WcfHosting
         public string ReturnNameImage()
         {
             Random rnd = new Random();
-            int index = rnd.Next(0, Container.nameImage.Count - 1);
+            int index = rnd.Next(0, Container.nameImage.Count);
             if (Container.nameImagePast.Count != Container.nameImage.Count)
             {
                 while (Container.nameImagePast.Contains(Container.nameImage[index]))
                 {
                     rnd = new Random();
-                    index = rnd.Next(Container.nameImage.Count - 1);
+                    index = rnd.Next(0, Container.nameImage.Count);
                 }
                 Container.nameImagePast.Add(Container.nameImage[index]);
                 return Container.nameImage[index].ToString();
@@ -288,9 +289,10 @@ namespace WcfHosting
             {
                 Container.nextPlayer += 1;
                 string answer = string.Empty;
-                if (Container.nameImage.Count == Container.nameImagePast.Count)
+                if (Container.nameImage.Count <= Container.nameImagePast.Count)
                 {
                     answer = "End";
+                    Console.WriteLine("Игра окончена");
                 }
                 else
                 {
@@ -371,7 +373,11 @@ namespace WcfHosting
                 var user = users.FirstOrDefault(i => i.ID == id);
                 if (user != null)
                 {
-                    if (Container.nameImageRound.Count != 5)
+                    if(msg == "Ready")
+                    {
+                        answer = msg;
+                    }
+                    else if (Container.nameImageRound.Count != 5)
                     {
                         answer = $"{user.Name} +  загадал ассоциацию: {msg}. Выберите подходящую картинку к этой ассоциации, нажав на нее.";
                     }
@@ -384,7 +390,14 @@ namespace WcfHosting
                 {
                     answer += DateTime.Now.ToShortTimeString() + " " + msg;
                 }
-                item.operationContext.GetCallbackChannel<IServerGameCallback>().MsgCallback(answer);
+                try
+                {
+                    item.operationContext.GetCallbackChannel<IServerGameCallback>().MsgCallback(answer);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine($"При рассылки сообщений с сервера произошла ошибка {ex.Message}") ;
+                }
             }
         }
     }

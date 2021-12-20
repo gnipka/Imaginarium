@@ -224,7 +224,9 @@ namespace Imaginarium
         public void EndGame()
         {
             TopPlayers topPlayers = new TopPlayers(client.ReturnPoints());
+            
             TopPlayers.signal = true;
+            TopPlayers.ID = ID;
             topPlayers.Show();
             this.Hide();
         }
@@ -257,9 +259,9 @@ namespace Imaginarium
                 {
                     case MessageBoxResult.Yes:
                         Image image = (Image)sender;
+                        Dictionary<string, int> CardAndName = client.ReturnCardAndName();
                         string nameImage = image.Source.ToString();
                         client.AddAnswer(nameImage, ID);
-                        Dictionary<string, int> CardAndName = client.ReturnCardAndName();
 
                         foreach (var item in CardAndName)
                         {

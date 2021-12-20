@@ -54,10 +54,10 @@
         <Image x:Name="Img3" Margin="185.333,114,416.334,36.667" Grid.Row="1" RenderTransformOrigin="0.5,1" Grid.Column="1" MouseDown="Img1_MouseDown" Cursor="Hand"/>
         <Image x:Name="Img4" Margin="373.333,114,228.334,36.667" Grid.Row="1" RenderTransformOrigin="0.5,1" Grid.Column="1" MouseDown="Img1_MouseDown" Cursor="Hand"/>
         <Image x:Name="Img5" Margin="558.333,114,43.334,36.667" Grid.Row="1" RenderTransformOrigin="0.5,1" Grid.Column="1" MouseDown="Img1_MouseDown" Cursor="Hand"/>
-        <TextBox x:Name="tb1" HorizontalAlignment="Left" Height="38" Margin="37,37,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170"/>
-        <TextBox x:Name="tb2" HorizontalAlignment="Left" Height="38" Margin="1,37,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="170" Grid.Column="1"/>
-        <TextBox x:Name="tb3" HorizontalAlignment="Left" Height="38" Margin="185,37,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170" Grid.Column="1"/>
-        <TextBox x:Name="tb4" HorizontalAlignment="Left" Height="38" Margin="374,37,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170" Grid.Column="1"/>
-        <TextBox x:Name="tb5" HorizontalAlignment="Left" Height="38" Margin="558,37,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170" Grid.Column="1"/>
+        <TextBox x:Name="tb1" IsReadOnly="True" HorizontalAlignment="Left" Height="38" Margin="37,37,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170"/>
+        <TextBox x:Name="tb2" IsReadOnly="True" HorizontalAlignment="Left" Height="38" Margin="1,37,0,0" Grid.Row="1"  VerticalAlignment="Top" Width="170" Grid.Column="1"/>
+        <TextBox x:Name="tb3" IsReadOnly="True" HorizontalAlignment="Left" Height="38" Margin="185,37,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170" Grid.Column="1"/>
+        <TextBox x:Name="tb4" IsReadOnly="True" HorizontalAlignment="Left" Height="38" Margin="374,37,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170" Grid.Column="1"/>
+        <TextBox x:Name="tb5" IsReadOnly="True" HorizontalAlignment="Left" Height="38" Margin="558,37,0,0" Grid.Row="1" VerticalAlignment="Top" Width="170" Grid.Column="1"/>
     </Grid>
 </Window>

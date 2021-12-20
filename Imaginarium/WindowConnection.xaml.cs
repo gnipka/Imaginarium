@@ -42,18 +42,37 @@ namespace Imaginarium
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            client = new ServiceGameClient(new System.ServiceModel.InstanceContext(this));
-            mas = client.Connect(name);            
-            pb.Value = mas[0];
-
-            if (mas[1] == 1)
+            try
             {
-                lbMsg.Items.Add("Происходит подключение, в данный момент к серверу подключены: " + mas[1] + " игрок");
-                
+                client = new ServiceGameClient(new System.ServiceModel.InstanceContext(this));
             }
-            else
+            catch(Exception ex)
             {
-                lbMsg.Items.Add("Происходит подключение, в данный момент к серверу подключены: " + mas[1] + " игрока");
+                MessageBox.Show($"При подключении к серверу возникла ошибка: {ex.Message}");
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
+            try
+            {
+                mas = client.Connect(name);
+                pb.Value = mas[0];
+                if (mas[1] == 1)
+                {
+                    lbMsg.Items.Add("Происходит подключение, в данный момент к серверу подключены: " + mas[1] + " игрок");
+
+                }
+                else
+                {
+                    lbMsg.Items.Add("Происходит подключение, в данный момент к серверу подключены: " + mas[1] + " игрока");
+                }
+            }
+            catch(System.ServiceModel.EndpointNotFoundException ex)
+            {
+                MessageBox.Show($"При подключении к серверу возникла ошибка: {ex.Message}");
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
             }
         }
 
@@ -73,7 +92,11 @@ namespace Imaginarium
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            client.Close();
+            try
+            {
+                client.Close();
+            }
+            catch { }
         }
 
         public void MsgCallback(string msg)
@@ -86,7 +109,7 @@ namespace Imaginarium
                 }
                 else if(msg == "End")
                 {
-
+                    userWindow.EndGame();
                 }
                 else if (signal)
                 {

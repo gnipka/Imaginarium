@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Imaginarium.ServiceReference1;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,8 @@ namespace Imaginarium
     {
         Dictionary<string, int> _scoring;
         public static bool signal { get; set; }
+        public static int ID { get; set; }
+        public ServiceGameClient client { get; set; }
         public TopPlayers(Dictionary<string, int> scoring)
         {
             InitializeComponent();
@@ -39,14 +42,20 @@ namespace Imaginarium
             {
                 var textBox1 = (TextBox)this.FindName($"tb{i}0");
                 var textBox2 = (TextBox)this.FindName($"tb{i}1");
-                //((TextBox)textBox.FindName("tb" + i.ToString() + 0.ToString())).Text = item.Key.ToString();
-                //((TextBox)textBox.FindName("tb" + i.ToString() + 1.ToString())).Text = item.Value.ToString();
 
                 textBox1.Text = item.Key.ToString();
                 textBox2.Text = item.Value.ToString();
                 
                 i--;
             }            
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (signal)
+            {
+                client.Disconnect(ID);
+            }
         }
     }
 }

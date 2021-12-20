@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="#B39DDB"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="Вход в игру" Height="410" Width="580" WindowStartupLocation="CenterScreen">
+        Title="Правила игры" Height="410" Width="580" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="89*" />
